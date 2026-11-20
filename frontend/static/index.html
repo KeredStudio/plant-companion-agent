@@ -171,11 +171,24 @@
 
   /* Chat Log */
   #log { flex: 1; overflow-y: auto; padding: 1.2rem; max-width: 800px; width: 100%; margin: 0 auto; }
-  .msg { margin: .7rem 0; }
-  .msg.user { text-align: right; }
+  .msg-wrapper {
+    margin: .85rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .msg-wrapper.user { align-items: flex-end; }
+  .msg-wrapper.agent { align-items: flex-start; }
+
+  .msg-time {
+    font-size: .75rem;
+    color: #888;
+    margin-top: .3rem;
+    padding: 0 .4rem;
+  }
+
   .bubble {
     display: inline-block;
-    padding: .7rem 1rem;
+    padding: .75rem 1.05rem;
     border-radius: 12px;
     background: #fff;
     border: 1px solid var(--border);
@@ -184,8 +197,9 @@
     white-space: pre-wrap;
     box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-  .msg.user .bubble { background: var(--accent); color: #fff; border: none; }
+  .msg-wrapper.user .bubble { background: var(--accent); color: #fff; border: none; }
   .bubble.rich { background: transparent; border: none; padding: 0; max-width: 100%; white-space: normal; box-shadow: none; }
+
   form { display: flex; gap: .6rem; padding: 1rem; border-top: 1px solid var(--border); background: #fff; max-width: 800px; width: 100%; margin: 0 auto; }
   input { flex: 1; padding: .75rem 1rem; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; }
   input:focus { border-color: var(--accent); }
@@ -269,7 +283,7 @@ function loadHistory() {
 
 function saveHistory(history) {
   try {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-30))); // Keep last 30 turns
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-30)));
   } catch (e) {}
 }
 
@@ -280,7 +294,6 @@ function renderHistorySidebar() {
     historyList.innerHTML = '<div class="history-empty">尚無對話記錄。<br>與 Plant Companion 對話後即可在此查看歷史回顧！</div>';
     return;
   }
-  // Render newest first
   for (let i = history.length - 1; i >= 0; i--) {
     const item = history[i];
     const div = el("div", "history-item");
@@ -321,13 +334,23 @@ clearHistoryBtn.addEventListener("click", () => {
   }
 });
 
+function getNowTimeStr() {
+  const now = new Date();
+  return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+}
+
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
 function bubble(who) {
-  const m = el("div", "msg " + who);
+  const wrapper = el("div", "msg-wrapper " + who);
   const b = el("div", "bubble");
-  m.appendChild(b); log.appendChild(m); log.scrollTop = log.scrollHeight;
-  return b;
+  const timeEl = el("div", "msg-time", getNowTimeStr());
+  
+  wrapper.appendChild(b);
+  wrapper.appendChild(timeEl);
+  log.appendChild(wrapper);
+  log.scrollTop = log.scrollHeight;
+  return { bubble: b, timeEl: timeEl };
 }
 
 function boundStr(v) {
@@ -420,8 +443,9 @@ function flattenText(messages) {
   return out.join(" ").trim();
 }
 
-function renderReply(b, parts) {
+function renderReply(b, timeEl, parts) {
   b.textContent = "";
+  if (timeEl) timeEl.textContent = getNowTimeStr();
   const texts = parts.filter(p => p && (p.kind === "text" || (!p.kind && p.text))).map(p => p.text || "");
   const a2ui = parts.filter(p => p && p.kind === "a2ui" && p.data).map(p => p.data);
 
@@ -435,7 +459,6 @@ function renderReply(b, parts) {
   if (!b.childNodes.length) b.textContent = "(no response)";
   log.scrollTop = log.scrollHeight;
 
-  // Compute text preview for history
   let preview = textStr;
   if (!preview && a2ui.length) {
     preview = flattenText(a2ui) || "🌿 [A2UI 互動式資訊卡片]";
@@ -447,30 +470,29 @@ form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const text = input.value.trim();
   if (!text) return;
-  bubble("user").textContent = text;
+  const userMsg = bubble("user");
+  userMsg.bubble.textContent = text;
   input.value = "";
-  const b = bubble("agent"); b.textContent = "…";
+  const agentMsg = bubble("agent");
+  agentMsg.bubble.textContent = "…";
   try {
     const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
     const raw = await res.text();
     let data;
     try { data = JSON.parse(raw); }
     catch { throw new Error(`Server returned non-JSON (HTTP ${res.status}). ${raw.slice(0, 300)}`); }
-    const preview = renderReply(b, data.parts || []);
+    const preview = renderReply(agentMsg.bubble, agentMsg.timeEl, data.parts || []);
 
-    // Record turn to local history
     const history = loadHistory();
-    const now = new Date();
-    const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
     history.push({
-      time: timeStr,
+      time: getNowTimeStr(),
       userText: text,
       agentPreview: preview
     });
     saveHistory(history);
 
   } catch (e) {
-    b.textContent = "Error: " + e.message;
+    agentMsg.bubble.textContent = "Error: " + e.message;
   }
 });
 </script>
