@@ -1,5 +1,9 @@
 # Plant Companion 🎄 Karina Warm Christmas & Winter Edition
 
+<p align="center">
+  <img src="./plant_companion_hero.png" alt="Plant Companion Hero Banner" width="100%" style="max-width: 900px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+</p>
+
 [English Version](#english-version) | [繁體中文版本](#繁體中文版本)
 
 ---
