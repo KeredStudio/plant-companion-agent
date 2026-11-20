@@ -313,6 +313,71 @@
     padding: 0 .4rem;
   }
 
+  /* Welcome Card & Quick Suggestion Chips */
+  .welcome-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--xmas-green);
+    border-radius: 14px;
+    padding: 1.25rem 1.35rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    line-height: 1.6;
+    color: #2c3e50;
+  }
+  .welcome-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--xmas-green);
+    margin-bottom: .6rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .welcome-desc {
+    font-size: .92rem;
+    margin-bottom: .85rem;
+    color: #4a5568;
+  }
+  .welcome-feature-list {
+    margin: 0 0 .95rem 0;
+    padding-left: 1.25rem;
+    font-size: .88rem;
+    color: #4a5568;
+  }
+  .welcome-feature-list li {
+    margin-bottom: .3rem;
+  }
+  .suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .8rem;
+    border-top: 1px dashed var(--border);
+    padding-top: .8rem;
+  }
+  .chip {
+    background: #edf6ef;
+    border: 1px solid #cce5d1;
+    color: var(--xmas-green);
+    padding: .35rem .75rem;
+    border-radius: 20px;
+    font-size: .82rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+  }
+  .chip:hover {
+    background: var(--xmas-green);
+    color: #fff;
+    border-color: var(--xmas-green);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(29, 83, 51, 0.2);
+  }
+
   /* Form & Input */
   form {
     display: flex;
@@ -660,9 +725,7 @@ function renderReply(b, timeEl, parts) {
   return preview || "(無文字回覆)";
 }
 
-form.addEventListener("submit", async (ev) => {
-  ev.preventDefault();
-  const text = input.value.trim();
+async function sendMessage(text) {
   if (!text) return;
   const userMsg = bubble("user");
   userMsg.bubble.textContent = text;
@@ -670,7 +733,11 @@ form.addEventListener("submit", async (ev) => {
   const agentMsg = bubble("agent");
   agentMsg.bubble.textContent = "…";
   try {
-    const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
     const raw = await res.text();
     let data;
     try { data = JSON.parse(raw); }
@@ -688,7 +755,63 @@ form.addEventListener("submit", async (ev) => {
   } catch (e) {
     agentMsg.bubble.textContent = "Error: " + e.message;
   }
+}
+
+form.addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const text = input.value.trim();
+  sendMessage(text);
 });
+
+// Render Welcome Card on Initial Load
+function showWelcomeMessage() {
+  const agentMsg = bubble("agent");
+  agentMsg.bubble.classList.add("rich");
+  
+  const card = el("div", "welcome-card");
+  
+  const title = el("div", "welcome-title");
+  title.innerHTML = `<span>🎄</span> <span>歡迎來到 Plant Companion 冬季聖誕園藝小幫手！</span> <span>✨</span>`;
+  card.appendChild(title);
+
+  const desc = el("div", "welcome-desc");
+  desc.innerHTML = `你好！我是你的專屬智慧植物夥伴 🌿。不論是寒冬低溫的室內養護、澆水週期紀錄，或是搜尋附近花店與生成藝術插畫，我都能為你解答。`;
+  card.appendChild(desc);
+
+  const list = el("ul", "welcome-feature-list");
+  list.innerHTML = `
+    <li>📖 <strong>植物照護指引</strong>：查詢龜背竹、虎尾蘭、琴葉榕等日照與寵物安全指引</li>
+    <li>❄️ <strong>即時天氣與防寒</strong>：輸入你的城市，提供最新氣溫濕度與抗寒防凍建議</li>
+    <li>💧 <strong>澆水打卡登記</strong>：紀錄上次澆水日期並自動推算下一次澆水時機</li>
+    <li>🎨 <strong>復古植物繪圖</strong>：運用 Gemini 生成典雅的水彩植物圖鑑插畫</li>
+    <li>🏪 <strong>尋找附近花店</strong>：快速尋找周邊園藝中心與特色花店</li>
+  `;
+  card.appendChild(list);
+
+  const chipsContainer = el("div", "suggestion-chips");
+  const suggestions = [
+    { label: "🌿 龜背竹冬季照護指南", query: "龜背竹在冬天的照護指南是什麼？" },
+    { label: "❄️ 查詢舊金山即時天氣防寒", query: "What is the weather in San Francisco and plant advice?" },
+    { label: "🎨 繪製虎尾蘭水彩插畫", query: "Please generate a botanical illustration of a Snake Plant" },
+    { label: "💧 登記琴葉榕澆水", query: "I just watered my Fiddle Leaf Fig today" },
+    { label: "🌸 尋找台北花店", query: "Find florists near Taipei, Taiwan" }
+  ];
+
+  suggestions.forEach(s => {
+    const chip = el("div", "chip");
+    chip.innerHTML = s.label;
+    chip.addEventListener("click", () => {
+      sendMessage(s.query);
+    });
+    chipsContainer.appendChild(chip);
+  });
+
+  card.appendChild(chipsContainer);
+  agentMsg.bubble.appendChild(card);
+}
+
+// Initialize on page load
+showWelcomeMessage();
 </script>
 </body>
 </html>
