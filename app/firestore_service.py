@@ -94,3 +94,48 @@ def update_plant_watering(name: str, notes: str = "") -> dict:
         "watering_interval_days": interval,
     }
 
+
+def update_plant_fertilizer(name: str, fertilizer_type: str, notes: str = "") -> dict:
+    """Record a fertilizing event for a plant and calculate next schedule based on season."""
+    import datetime
+
+    query = db.collection(PLANTS_COLLECTION).where("name_lower", "==", name.lower().strip()).limit(1).stream()
+    doc_snapshot = None
+    for doc in query:
+        doc_snapshot = doc
+        break
+
+    if not doc_snapshot:
+        return {"status": "error", "message": f"Plant '{name}' not found in catalog."}
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    month = now.month
+    # Spring/Summer (April-September) -> 14-30 days; Autumn/Winter (October-March) -> Dormant / 60+ days
+    is_dormant_season = month in [10, 11, 12, 1, 2, 3]
+    interval = 60 if is_dormant_season else 21
+    next_due = now + datetime.timedelta(days=interval)
+
+    update_payload = {
+        "last_fertilized_at": now.isoformat(),
+        "next_fertilizer_due": next_due.isoformat(),
+        "fertilizer_type": fertilizer_type,
+    }
+    if notes:
+        update_payload["last_fertilizer_notes"] = notes
+
+    db.collection(PLANTS_COLLECTION).document(doc_snapshot.id).update(update_payload)
+
+    return {
+        "status": "success",
+        "plant_name": doc_snapshot.to_dict().get("name"),
+        "last_fertilized_at": now.strftime("%Y-%m-%d"),
+        "fertilizer_type": fertilizer_type,
+        "next_fertilizer_due": next_due.strftime("%Y-%m-%d"),
+        "seasonal_advice": (
+            "Winter/Dormant season: Avoid over-fertilizing. Dilute to half-strength or pause until Spring."
+            if is_dormant_season else
+            "Active growing season: Regular feeding supports vigorous leaf and root development."
+        ),
+    }
+
+

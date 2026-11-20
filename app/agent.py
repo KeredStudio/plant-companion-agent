@@ -114,6 +114,7 @@ from app.firestore_service import (
     get_plant_catalog,
     search_plant,
     update_plant_watering,
+    update_plant_fertilizer,
 )
 
 
@@ -187,6 +188,134 @@ def log_watering(plant_name: str, notes: str = "") -> dict:
         A dictionary with the updated watering status and next due date.
     """
     return update_plant_watering(name=plant_name, notes=notes)
+
+
+def diagnose_plant_health(plant_name: str, symptoms: str) -> dict:
+    """Diagnose a plant disease, pest infestation, or environmental problem based on symptoms
+    (e.g. yellowing leaves, brown crispy tips, spider mites, drooping stems).
+
+    Args:
+        plant_name: Name of the plant experiencing issues (e.g. 'Monstera Deliciosa', 'Fiddle Leaf Fig').
+        symptoms: Description of the observed symptoms or leaf conditions.
+
+    Returns:
+        A structured diagnosis dictionary including likely cause, emergency treatment, and recovery timeline.
+    """
+    sym = symptoms.lower()
+    if "yellow" in sym or "黃" in sym:
+        cause = "Overwatering or root saturation causing oxygen starvation (Root Stress / Chlorosis)."
+        treatment = "Check soil moisture with a wooden skewer. Stop watering until top 2-3 inches are dry. Ensure drainage holes are clear."
+    elif "brown" in sym or "crisp" in sym or "焦" in sym or "乾" in sym:
+        cause = "Low atmospheric humidity, underwatering, or direct sunlight scorch."
+        treatment = "Increase ambient humidity (50-60%), trim severely damaged tips with sterilized shears, and relocate away from heat vents or harsh direct sun."
+    elif "mite" in sym or "web" in sym or "蟲" in sym or "蛛" in sym or "white" in sym:
+        cause = "Pest infestation (Spider Mites, Mealybugs, or Fungus Gnats)."
+        treatment = "Isolate immediately. Wipe foliage with a gentle solution of diluted neem oil or insecticidal soap every 5-7 days."
+    elif "droop" in sym or "垂" in sym:
+        cause = "Severe dehydration or root shock due to rapid temperature change."
+        treatment = "Perform bottom-watering for 30 minutes, or shelter away from cold winter drafts."
+    else:
+        cause = "Nutrient imbalance or seasonal adjustment shock."
+        treatment = "Inspect roots for rot, ensure bright indirect light, and pause heavy fertilization during winter."
+
+    return {
+        "status": "success",
+        "plant_name": plant_name,
+        "symptoms": symptoms,
+        "likely_cause": cause,
+        "emergency_action": treatment,
+        "recovery_time": "1 to 3 weeks with proper adjustment",
+        "winter_tip": "Winter light is weaker; reduce watering frequency and keep leaves clean from dust."
+    }
+
+
+def calculate_repotting_and_soil(plant_name: str, current_pot_diameter_cm: float) -> dict:
+    """Calculate the ideal new pot dimensions and tailored soil/medium recipe
+    (peat moss, perlite, pumice, bark) when repotting a plant.
+
+    Args:
+        plant_name: Name of the plant to repot (e.g. 'Monstera', 'Snake Plant', 'Succulent', 'Aroid').
+        current_pot_diameter_cm: Current pot diameter in centimeters (e.g. 15.0).
+
+    Returns:
+        A dictionary with recommended pot size, drainage requirement, and exact soil mix ratios.
+    """
+    new_pot = current_pot_diameter_cm + 3.0 if current_pot_diameter_cm <= 15 else current_pot_diameter_cm + 5.0
+    p_lower = plant_name.lower()
+
+    if "snake" in p_lower or "succulent" in p_lower or "cactus" in p_lower or "虎尾蘭" in p_lower or "多肉" in p_lower:
+        recipe = "Fast-Draining Mineral Mix: 50% Pumice/Perlite, 30% Succulent Soil, 20% Coarse Sand."
+        drainage = "Maximum drainage essential; unglazed terracotta pot recommended."
+    elif "monstera" in p_lower or "fig" in p_lower or "pothos" in p_lower or "龜背" in p_lower or "琴葉" in p_lower:
+        recipe = "Chunky Aroid Mix: 40% Peat moss/Coco coir, 30% Orchid Bark, 20% Perlite, 10% Worm castings."
+        drainage = "High porosity with drainage holes to prevent root rot."
+    else:
+        recipe = "All-Purpose Indoor Mix: 60% Quality Potting Soil, 20% Perlite, 20% Compost."
+        drainage = "Standard drainage pot with saucer."
+
+    return {
+        "status": "success",
+        "plant_name": plant_name,
+        "current_pot_size_cm": current_pot_diameter_cm,
+        "recommended_new_pot_cm": new_pot,
+        "pot_upsize_guide": f"Upgrade from {current_pot_diameter_cm}cm to {new_pot}cm diameter pot.",
+        "soil_recipe": recipe,
+        "drainage_notes": drainage,
+        "best_season": "Spring through early Summer (avoid repotting in deep winter unless emergency rot)."
+    }
+
+
+def log_fertilizing(plant_name: str, fertilizer_type: str = "Balanced Liquid Fertilizer", notes: str = "") -> dict:
+    """Log that a plant has been fertilized. Updates Firestore and calculates next due date
+    taking seasonal dormancy (winter vs active growth) into consideration.
+
+    Args:
+        plant_name: Common name of the plant (e.g. 'Monstera Deliciosa').
+        fertilizer_type: Type of fertilizer applied (e.g. 'Liquid 10-10-10', 'Slow-release granules').
+        notes: Optional extra observation.
+
+    Returns:
+        A dictionary with the updated fertilizer schedule and seasonal advisory.
+    """
+    return update_plant_fertilizer(name=plant_name, fertilizer_type=fertilizer_type, notes=notes)
+
+
+def evaluate_room_sunlight(window_facing_direction: str) -> dict:
+    """Evaluate indoor lighting conditions based on window orientation (North, South, East, West)
+    and recommend suitable indoor plants.
+
+    Args:
+        window_facing_direction: The direction the window faces ('North', 'South', 'East', 'West' or '東', '西', '南', '北').
+
+    Returns:
+        Light level description, daily sun exposure hours, and list of recommended plants.
+    """
+    d = window_facing_direction.lower()
+    if "south" in d or "南" in d:
+        light = "Bright Direct to High Indirect Light"
+        hours = "5 to 7 hours of abundant daylight"
+        plants = ["Fiddle Leaf Fig", "Bird of Paradise", "Cactus & Succulents", "Citrus", "Jade Plant"]
+    elif "east" in d or "東" in d:
+        light = "Gentle Morning Direct + Medium Indirect Light"
+        hours = "3 to 4 hours of gentle morning sun"
+        plants = ["Monstera Deliciosa", "Calathea (Prayer Plant)", "Boston Fern", "Peace Lily", "Anthurium"]
+    elif "west" in d or "西" in d:
+        light = "Intense Afternoon Sun + High Ambient Light"
+        hours = "4 to 6 hours of warm afternoon sun"
+        plants = ["Snake Plant", "ZZ Plant", "Rubber Tree (Ficus Elastica)", "Pothos", "Dracaena"]
+    else:  # North
+        light = "Low to Gentle Medium Indirect Light (No harsh rays)"
+        hours = "Consistent low-intensity ambient light"
+        plants = ["Cast Iron Plant", "ZZ Plant", "Snake Plant", "Chinese Evergreen (Aglaonema)", "Heartleaf Philodendron"]
+
+    return {
+        "status": "success",
+        "direction": window_facing_direction,
+        "light_quality": light,
+        "sunlight_hours": hours,
+        "recommended_plants": plants,
+        "winter_tip": "In winter, move plants 30-50 cm closer to windows to capture limited daylight."
+    }
 
 
 def geocode_address(address: str) -> dict:
@@ -380,15 +509,18 @@ from a2ui.core.basic_catalog.v0_8 import BasicCatalog
 _a2ui_generator = DirectJsonPromptGenerator([BasicCatalog()])
 _a2ui_schema_prompt = _a2ui_generator.generate()
 
-AGENT_SYSTEM_PROMPT = f"""You are Plant Companion, an expert urban plant care assistant.
-You help users manage and care for indoor greenery, answer care questions,
-log watering events, find local plant nurseries/florists with Google Maps,
-generate botanical images, and look up or update the plant catalog backed by Firestore.
+AGENT_SYSTEM_PROMPT = f"""You are Plant Companion (Winter ❄️), an expert urban plant care assistant with deep botanical and horticultural intelligence.
+You help users manage and care for indoor greenery, diagnose plant diseases and pests (diagnose_plant_health),
+calculate custom repotting pot dimensions and soil recipes (calculate_repotting_and_soil),
+log watering events (log_watering) and seasonal fertilizing schedules (log_fertilizing),
+evaluate indoor window lighting orientation (evaluate_room_sunlight),
+find local plant nurseries/florists with Google Maps (find_nearby_places),
+generate botanical images (generate_plant_image), and manage the Firestore plant catalog.
 
-When presenting plant information, care guides, weather advisories, or search results,
+When presenting plant information, care guides, weather advisories, diagnosis results, or recipes,
 you may output structured A2UI JSON components using version 0.8 to create clean, readable cards and tables.
 Keep surfaces simple: ONE Card > ONE Column > a few Text rows or Image.
-When an image is generated, you can display it using an Image component with its public https URL.
+When an image is generated, display it using an Image component with its public https URL.
 
 {_a2ui_schema_prompt}
 """
@@ -416,6 +548,10 @@ root_agent = Agent(
         lookup_plant,
         record_new_plant,
         log_watering,
+        log_fertilizing,
+        diagnose_plant_health,
+        calculate_repotting_and_soil,
+        evaluate_room_sunlight,
         geocode_address,
         find_nearby_places,
         get_weather,
