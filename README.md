@@ -1,4 +1,4 @@
-# Plant Companion 🌿 聖誕暖心綠植夥伴
+# Plant Companion ❄️ aespa Winter Cyber-Frost Edition
 
 [English Version](#english-version) | [繁體中文版本](#繁體中文版本)
 
@@ -7,9 +7,18 @@
 <a name="繁體中文版本"></a>
 ## 繁體中文版本
 
-**Plant Companion（綠植夥伴）** 是一款專為室內綠植愛好者打造的智慧型對話顧問。具備植物圖鑑檢索、日照澆水照護指南、冬季防寒天氣警報、澆水歷史追蹤、周邊花市花店搜尋，以及運用 Gemini 繪製復古水彩植物插畫等全方位功能。
+**Plant Companion ❄️（KWANGYA 曠野綠植夥伴）** 是一款融合 **aespa Winter 賽博冰霜美學** 與頂尖 Google 生成式 AI 技術的室內綠植智慧管家。
 
-本專案採用 **Google ADK (Agent Development Kit)** 開發，後端 Agent 部署於 **Vertex AI Agent Platform (Agent Runtime / Reasoning Engine)**，前端採用 **Cloud Run** 託管的 FastAPI 代理伺服器與響應式網頁聊天介面，全面支援 A2A (Agent-to-Agent) JSON-RPC 協議與 **A2UI** 豐富卡片互動渲染。
+具備全套 **12 大智慧綠植照護功能**，包含：AI 葉片病害急救診斷、換盆與介質配比精算、季節休眠施肥排程、居家窗台採光方位評估、植物圖鑑水彩拍立得插畫生成、極寒低溫防凍警報、即時天氣防護、本地花市定位、Web Speech 語音對話、虛擬花園儀表板、綠手指成就勳章牆，以及超可愛的 Talking Plant 植物自述模式！
+
+本專案採用 **Google ADK (Agent Development Kit)** 與 **Vertex AI Reasoning Engine (Agent Runtime)** 開發後端大腦，前端以 **Cloud Run** 託管 FastAPI A2A 代理伺服器與響應式 Cyber-Frost Web UI，全面支援 A2A JSON-RPC 協議與 **A2UI** 晶瑩動態卡片渲染。
+
+---
+
+### 🌐 線上展示與即時體驗
+
+- **正式服務體驗網址**：[https://plant-companion-frontend-1038784917896.us-central1.run.app](https://plant-companion-frontend-1038784917896.us-central1.run.app)
+- **GitHub 儲存庫**：[https://github.com/KeredStudio/buildwithgemini-my-agent](https://github.com/KeredStudio/buildwithgemini-my-agent)
 
 ---
 
@@ -30,16 +39,22 @@ https://github.com/user-attachments/assets/plant-companion-demo (可下載或直
 
 ---
 
-### 🌟 核心功能特色
+### 🌟 12 大功能完整特色總覽
 
-- 📖 **植物百科與照護資料庫**：以 Cloud Firestore 為基礎，儲存室內植物詳細養護屬性（日照強度、水分週期、難易度、貓狗寵物毒性）。
-- 💧 **澆水登記與週期追蹤**：打卡記錄澆水事件，系統自動依植物特性推算下次最佳澆水日期。
-- 🎨 **植物圖鑑水彩插畫生成**：運用 `gemini-3.1-flash-lite-image` 生成精緻古典水彩插圖，自動上傳至 Cloud Storage 公開展示。
-- ❄️ **即時天氣與防寒預警**：整合 Open-Meteo API 即時查詢指定城市氣溫與濕度，提供氣候適應與冬季防凍建議。
-- 🏪 **花店與園藝中心搜尋**：串接 Google Maps Geocoding API 與 Places API (New) 定位附近的植栽門市。
-- 📱 **全平台行動裝置適配 (Mobile Responsive)**：針對手機 Chrome / Safari 全面優化（支援 100dvh 動態高度、防縮放、防跑版、安全邊距 safe-area-inset）。
-- 🎄 **溫馨聖誕主題風格與角色頭像**：暖白、松綠與熱紅酒配色，附帶雙方頭像（Agent 🎄 / 使用者 🧑‍🌾）、時間戳記、歡迎卡片與快捷範例按鈕。
-- 📂 **對話歷史紀錄抽屜**：左上角漢堡選單隨時開啟側邊欄回顧最近 30 則對話紀錄。
+| 階段 | 編號 | 功能特色 | 說明 |
+| :--- | :--- | :--- | :--- |
+| **Phase 1** | 1 | 🎧 **冬日 Lyria Lo-Fi 播放器** | 頂部專屬 BGM 按鈕，隨時串流 Vertex AI Lyria 原創輕音樂與動態音波。 |
+| | 2 | 🎙️ **Web Speech API 語音輸入** | 專屬麥克風按鈕，免動手用語音進行照護提問與澆水打卡。 |
+| | 3 | 🌱 **我的花園儀表板 (Virtual Garden)** | 抽屜選單即時呈現植物水分倒數與「今日已澆水」快捷按鈕。 |
+| | 4 | 🎖️ **綠手指成就勳章牆** | 內建抗寒守護者、清泉水行俠、植物神醫等 6 大解鎖徽章。 |
+| **Phase 2** | 5 | 🩺 **AI 拍照與病害急救診斷** | 快速診斷葉黃、焦邊、蟲害，並以 A2UI 晶瑩卡片即時提供急救方案。 |
+| | 6 | 🪴 **換盆與介質配比計算機** | 輸入盆徑與植物品種，自動精算顆粒石、樹皮與泥炭土黃金比例。 |
+| | 7 | 💊 **季節性休眠施肥日程** | 結合 Firestore 記錄施肥，依當前月份智慧提示冬季休眠期減肥建議。 |
+| | 8 | ☀️ **居家方位採光評估指南** | 根據東/西/南/北窗戶方向評估日照時數並推薦適配植栽。 |
+| **Phase 3** | 9 | 🖼️ **拍立得藝術明信片** | 喚醒 Gemini 繪圖時自動包裝為限量版拍立得卡片，附一鍵高清下載。 |
+| | 10 | 💬 **Talking Plant 擬人自述模式** | 點擊切換為植物第一人稱（例如琴葉榕），幽默生動地向主人撒嬌互動。 |
+| | 11 | 🏪 **周邊花市與園藝資材推薦** | 整合 Google Maps Geocoding & Places API 定位最近花店與資材行。 |
+| **Phase 4** | 12 | ❄️ **極寒低溫防凍警報橫幅** | 全域頂部低溫 Warning Banner，提醒熱帶觀葉植物移離冷風吹襲的窗邊。 |
 
 ---
 
@@ -53,7 +68,9 @@ my-agent/
 │   └── firestore_service.py   # Firestore 資料庫 CRUD 輔助函式
 ├── frontend/                  # 前端 Web Chat UI & A2A 代理伺服器
 │   ├── main.py                # FastAPI 伺服器，透過 A2A JSON-RPC 與 Agent Runtime 通訊
-│   ├── static/index.html      # 響應式聊天前端（含 A2UI 渲染器、聖誕風格、歷史抽屜）
+│   ├── static/
+│   │   ├── index.html         # 響應式聊天前端（含 12 大功能、A2UI 渲染器、Cyber-Frost 主題）
+│   │   └── winter_lofi.mp3    # Vertex AI Lyria 原創 Lo-Fi 背景音軌
 │   ├── requirements.txt       # 前端 Python 相依套件
 │   └── Dockerfile             # 前端 Cloud Run 容器打包檔
 ├── seed_firestore.py          # Firestore 初始植物資料匯入腳本
@@ -111,7 +128,7 @@ python3 seed_firestore.py
 
 #### 步驟 3：部署 Agent 後端至 Vertex AI Agent Runtime
 ```bash
-agents-cli deploy
+agents-cli deploy --no-confirm-project
 ```
 > 部署完成後，指令列會輸出類似以下格式的資源識別碼：  
 > `projects/<PROJECT_NUMBER>/locations/us-east1/reasoningEngines/<REASONING_ENGINE_ID>`  
@@ -152,9 +169,18 @@ uvicorn main:app --port 8080
 <a name="english-version"></a>
 ## English Version
 
-**Plant Companion** is an intelligent conversational agent engineered for urban plant enthusiasts to care for their indoor greenery with plant care databases, watering logs, seasonal weather advisories, local nursery search, and vintage watercolor illustrations powered by Gemini.
+**Plant Companion ❄️ (aespa Winter Cyber-Frost Edition)** is an intelligent conversational agent engineered for urban plant lovers, combining **aespa Winter's Cyber-Frost aesthetics** with Google's advanced Generative AI and botanical intelligence.
 
-Built with **Google ADK (Agent Development Kit)**, the backend agent is deployed to **Vertex AI Agent Platform (Agent Runtime / Reasoning Engine)**, and served via a **Cloud Run** web chat frontend supporting the A2A (Agent-to-Agent) JSON-RPC protocol and **A2UI** interactive card display.
+Featuring a full suite of **12 smart botanical capabilities**: AI pest & disease emergency diagnosis, repotting & custom soil mix calculator, seasonal dormancy fertilizing schedule, room window sunlight orientation assessment, Gemini vintage watercolor Polaroid art generation, severe frost weather alerts, real-time climate advice, Google Maps nursery locator, Web Speech API voice input, Virtual Garden dashboard, Green Thumb achievement badge showcase, and a charming Talking Plant first-person persona!
+
+Built with **Google ADK (Agent Development Kit)** and **Vertex AI Reasoning Engine (Agent Runtime)**, the frontend is hosted on **Cloud Run** serving a FastAPI A2A proxy and a mobile-responsive Cyber-Frost Web UI, fully supporting the A2A JSON-RPC protocol and **A2UI** interactive crystal card rendering.
+
+---
+
+### 🌐 Live Service & Links
+
+- **Live Service URL**: [https://plant-companion-frontend-1038784917896.us-central1.run.app](https://plant-companion-frontend-1038784917896.us-central1.run.app)
+- **GitHub Repository**: [https://github.com/KeredStudio/buildwithgemini-my-agent](https://github.com/KeredStudio/buildwithgemini-my-agent)
 
 ---
 
@@ -175,16 +201,22 @@ https://github.com/user-attachments/assets/plant-companion-demo (Download or pla
 
 ---
 
-### 🌟 Key Features
+### 🌟 12 Key Features Breakdown
 
-- 📖 **Plant Care & Inventory Database**: Backed by Cloud Firestore storing indoor plant attributes (light levels, watering frequency, difficulty, pet toxicity).
-- 💧 **Watering Log & Tracker**: Records watering events in Firestore and automatically calculates next recommended watering dates.
-- 🎨 **Botanical Watercolor Illustrations**: Generates classic botanical watercolor artwork with `gemini-3.1-flash-lite-image` and hosts them on Cloud Storage.
-- ❄️ **Real-time Weather & Cold Protection**: Connects to Open-Meteo API for real-time temperature and humidity, providing frost protection advice.
-- 🏪 **Nursery & Florist Finder**: Integrates Google Maps Geocoding & Places API (New) to locate nearby garden centers and flower shops.
-- 📱 **Fully Mobile Responsive**: Comprehensive support for Mobile Chrome / Safari (`100dvh` dynamic height, safe-area-inset padding, zoom prevention, and layout overflow safeguards).
-- 🎄 **Warm Christmas Theme with Avatars**: Cozy forest green, wine red, and cream palette with dedicated avatars (Agent 🎄 / User 🧑‍🌾), timestamps, welcome card, and quick suggestion chips.
-- 📂 **Conversation History Drawer**: Accessible via the top-left hamburger menu to inspect recent chat turns.
+| Phase | # | Feature | Description |
+| :--- | :--- | :--- | :--- |
+| **Phase 1** | 1 | 🎧 **Winter Lyria Lo-Fi Player** | Dedicated header BGM toggle streaming original Lo-Fi music by Vertex AI Lyria with animated wave bars. |
+| | 2 | 🎙️ **Web Speech API Voice Input** | Hands-free voice recognition button to ask plant questions or check in watering. |
+| | 3 | 🌱 **Virtual Garden Dashboard** | Drawer panel displaying moisture countdowns and 1-click "Watered Today" logging. |
+| | 4 | 🎖️ **Green Thumb Achievement Badges** | Badge wall celebrating Frost Guardian, Aquamancer, Plant Healer, and MY Master milestones. |
+| **Phase 2** | 5 | 🩺 **AI Plant Health Diagnosis** | Analyzes yellowing, brown tips, and spider mites, returning treatment actions in crystal A2UI cards. |
+| | 6 | 🪴 **Repotting & Soil Mix Calculator** | Calculates ideal upsized pot diameter and tailored soil recipes (peat, perlite, bark ratios). |
+| | 7 | 💊 **Seasonal Dormancy Fertilizer Log** | Logs fertilizer application to Firestore with winter dormancy frequency adjustments. |
+| | 8 | ☀️ **Window Sunlight Orientation Guide** | Assesses daily sunlight hours based on window orientation (N/S/E/W) and suggests matching plants. |
+| **Phase 3** | 9 | 🖼️ **Polaroid Botanical Postcards** | Packages Gemini-generated illustrations into downloadable retro Polaroid cards. |
+| | 10 | 💬 **Talking Plant Persona Mode** | Switches conversation to a playful, humorous first-person plant speaking directly to its owner. |
+| | 11 | 🏪 **Nursery & Florist Finder** | Integrates Google Maps Geocoding & Places API (New) to locate nearby plant shops. |
+| **Phase 4** | 12 | ❄️ **Frost Cold Warning Alert Banner** | Top banner warning users to move tropical foliage away from cold window drafts during winter chills. |
 
 ---
 
@@ -193,12 +225,14 @@ https://github.com/user-attachments/assets/plant-companion-demo (Download or pla
 ```
 my-agent/
 ├── app/                       # Core agent implementation
-│   ├── agent.py               # ReAct agent, tools, callbacks, and A2UI schema
+│   ├── agent.py               # ReAct agent, 14 registered tools, callbacks, and A2UI schema
 │   ├── a2ui_utils.py          # A2UI callback and message wrapper
-│   └── firestore_service.py   # Firestore database CRUD helpers
+│   └── firestore_service.py   # Firestore database CRUD and watering/fertilizer helpers
 ├── frontend/                  # Web Chat UI & A2A Proxy
 │   ├── main.py                # FastAPI proxy communicating over A2A JSON-RPC
-│   ├── static/index.html      # Responsive UI with A2UI renderer, Christmas theme & drawer
+│   ├── static/
+│   │   ├── index.html         # Responsive UI with 12 features, A2UI renderer & Cyber-Frost theme
+│   │   └── winter_lofi.mp3    # Original Lyria Lo-Fi track served locally
 │   ├── requirements.txt       # Frontend dependencies
 │   └── Dockerfile             # Cloud Run container definition
 ├── seed_firestore.py          # Initial plant database seeder
@@ -256,7 +290,7 @@ python3 seed_firestore.py
 
 #### Step 3: Deploy Backend Agent to Vertex AI Agent Runtime
 ```bash
-agents-cli deploy
+agents-cli deploy --no-confirm-project
 ```
 > Upon completion, note the returned resource name:  
 > `projects/<PROJECT_NUMBER>/locations/us-east1/reasoningEngines/<REASONING_ENGINE_ID>`  
