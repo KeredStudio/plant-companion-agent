@@ -1,57 +1,325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agent</title>
-<!-- Optional: used only to draw A2UI Icon components. If it can't load (offline/
-     corp network), icons fall back to showing their name as text. -->
+<title>Plant Companion</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 <style>
-  :root { --accent:#1a73e8; --bg:#f6f8fa; --border:#dfe3e8; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family:system-ui,sans-serif; background:var(--bg); display:flex; flex-direction:column; height:100vh; }
-  header { background:var(--accent); color:#fff; padding:.9rem 1.2rem; font-weight:700; }
-  #log { flex:1; overflow-y:auto; padding:1.2rem; max-width:780px; width:100%; margin:0 auto; }
-  .msg { margin:.6rem 0; }
-  .msg.user { text-align:right; }
-  .bubble { display:inline-block; padding:.6rem .9rem; border-radius:12px; background:#fff; border:1px solid var(--border); text-align:left; max-width:90%; white-space:pre-wrap; }
-  .msg.user .bubble { background:var(--accent); color:#fff; border:none; }
-  /* When the reply is an A2UI card, drop the bubble chrome so the card stands alone. */
-  .bubble.rich { background:transparent; border:none; padding:0; max-width:100%; white-space:normal; }
-  form { display:flex; gap:.5rem; padding:1rem; border-top:1px solid var(--border); background:#fff; }
-  input { flex:1; padding:.7rem; border:1px solid var(--border); border-radius:8px; font-size:1rem; }
-  button { padding:.7rem 1.1rem; border:none; border-radius:8px; background:var(--accent); color:#fff; font-weight:600; cursor:pointer; }
+  :root {
+    --accent: #2e7d32;
+    --accent-hover: #1b5e20;
+    --accent-light: #e8f5e9;
+    --bg: #f4f7f4;
+    --border: #d0ded1;
+    --sidebar-w: 320px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: .85rem 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    z-index: 20;
+  }
+  .hamburger-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .hamburger-btn:hover { background: rgba(255,255,255,0.2); }
+  .hamburger-btn span { font-size: 1.6rem; color: #fff; }
+  .header-title { font-size: 1.15rem; display: flex; align-items: center; gap: .4rem; }
 
-  /* --- A2UI component styles (Card, Column, Row, Text, Divider, List, Image, Icon) --- */
-  .a2card { border:1px solid var(--border); border-radius:12px; padding:1rem; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.06); max-width:100%; }
-  .a2card + .a2card, .a2col > .a2card { margin-top:.6rem; }
-  .a2col { display:flex; flex-direction:column; gap:.4rem; }
-  .a2row { display:flex; flex-direction:row; gap:.6rem; align-items:center; flex-wrap:wrap; }
-  .a2row.between { justify-content:space-between; }
-  .a2text { margin:0; line-height:1.4; }
-  .a2text.a2-h1 { font-size:1.5rem; font-weight:700; }
-  .a2text.a2-h2 { font-size:1.25rem; font-weight:700; }
-  .a2text.a2-h3 { font-size:1.1rem; font-weight:600; }
-  .a2text.a2-h4 { font-size:1rem; font-weight:600; }
-  .a2text.a2-caption { font-size:.85rem; color:#666; }
-  .a2divider { border:none; border-top:1px solid var(--border); margin:.4rem 0; width:100%; }
-  .a2img { max-width:100%; border-radius:8px; display:block; }
-  .material-symbols-outlined { font-family:'Material Symbols Outlined'; font-size:1.25rem; line-height:1; vertical-align:middle; color:var(--accent); }
+  /* Drawer / Overlay */
+  .overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 30;
+  }
+  .overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-w);
+    max-width: 85vw;
+    background: #fff;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    z-index: 40;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-header {
+    background: var(--accent);
+    color: #fff;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-header h2 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: .5rem; }
+  .close-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+  }
+  .close-btn:hover { background: rgba(255,255,255,0.2); }
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+  .history-empty {
+    color: #777;
+    font-size: .95rem;
+    text-align: center;
+    margin-top: 2rem;
+    line-height: 1.5;
+  }
+  .history-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .85rem;
+    background: #fafafa;
+    transition: all 0.2s;
+  }
+  .history-item:hover {
+    border-color: var(--accent);
+    background: #f1f8f2;
+  }
+  .history-time {
+    font-size: .75rem;
+    color: #888;
+    margin-bottom: .35rem;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+  }
+  .history-user {
+    font-weight: 600;
+    color: #222;
+    font-size: .9rem;
+    margin-bottom: .3rem;
+  }
+  .history-agent-preview {
+    font-size: .82rem;
+    color: #555;
+    line-height: 1.35;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .sidebar-footer {
+    padding: .8rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+  }
+  .clear-btn {
+    background: #fbe9e7;
+    color: #c62828;
+    border: 1px solid #ffccbc;
+    border-radius: 6px;
+    padding: .45rem .85rem;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .clear-btn:hover { background: #ffcdd2; }
+
+  /* Chat Log */
+  #log { flex: 1; overflow-y: auto; padding: 1.2rem; max-width: 800px; width: 100%; margin: 0 auto; }
+  .msg { margin: .7rem 0; }
+  .msg.user { text-align: right; }
+  .bubble {
+    display: inline-block;
+    padding: .7rem 1rem;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--border);
+    text-align: left;
+    max-width: 90%;
+    white-space: pre-wrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .msg.user .bubble { background: var(--accent); color: #fff; border: none; }
+  .bubble.rich { background: transparent; border: none; padding: 0; max-width: 100%; white-space: normal; box-shadow: none; }
+  form { display: flex; gap: .6rem; padding: 1rem; border-top: 1px solid var(--border); background: #fff; max-width: 800px; width: 100%; margin: 0 auto; }
+  input { flex: 1; padding: .75rem 1rem; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; }
+  input:focus { border-color: var(--accent); }
+  button.send-btn { padding: .75rem 1.4rem; border: none; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  button.send-btn:hover { background: var(--accent-hover); }
+
+  /* A2UI components */
+  .a2card { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.06); max-width: 100%; }
+  .a2card + .a2card, .a2col > .a2card { margin-top: .6rem; }
+  .a2col { display: flex; flex-direction: column; gap: .45rem; }
+  .a2row { display: flex; flex-direction: row; gap: .6rem; align-items: center; flex-wrap: wrap; }
+  .a2row.between { justify-content: space-between; }
+  .a2text { margin: 0; line-height: 1.45; }
+  .a2text.a2-h1 { font-size: 1.45rem; font-weight: 700; color: #1b5e20; }
+  .a2text.a2-h2 { font-size: 1.25rem; font-weight: 700; color: #1b5e20; }
+  .a2text.a2-h3 { font-size: 1.1rem; font-weight: 600; color: #2e7d32; }
+  .a2text.a2-h4 { font-size: 1rem; font-weight: 600; }
+  .a2text.a2-caption { font-size: .85rem; color: #666; }
+  .a2divider { border: none; border-top: 1px solid var(--border); margin: .4rem 0; width: 100%; }
+  .a2img { max-width: 100%; border-radius: 8px; display: block; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.3rem; line-height: 1; vertical-align: middle; color: var(--accent); }
 </style>
 </head>
 <body>
-<header>Your Agent</header>
+
+<header>
+  <button id="menuBtn" class="hamburger-btn" aria-label="選單" title="對話歷史記錄">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <div class="header-title">
+    <span>🌿</span>
+    <span>Plant Companion</span>
+  </div>
+</header>
+
+<div id="overlay" class="overlay"></div>
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <h2><span class="material-symbols-outlined" style="color:#fff;">history</span> 最近對話歷史</h2>
+    <button id="closeBtn" class="close-btn" aria-label="關閉">
+      <span class="material-symbols-outlined" style="color:#fff;">close</span>
+    </button>
+  </div>
+  <div id="historyList" class="sidebar-content">
+    <div class="history-empty">尚無對話記錄。<br>與 Plant Companion 對話後即可在此查看歷史回顧！</div>
+  </div>
+  <div class="sidebar-footer">
+    <button id="clearHistoryBtn" class="clear-btn">清除歷史</button>
+  </div>
+</aside>
+
 <div id="log"></div>
+
 <form id="form">
-  <input id="input" placeholder="Ask something…" autocomplete="off" autofocus>
-  <button>Send</button>
+  <input id="input" placeholder="詢問植物照護、澆水、附近花店或生成植物插畫…" autocomplete="off" autofocus>
+  <button class="send-btn">發送</button>
 </form>
 
 <script>
 const log = document.getElementById("log");
 const form = document.getElementById("form");
 const input = document.getElementById("input");
+const menuBtn = document.getElementById("menuBtn");
+const closeBtn = document.getElementById("closeBtn");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+const historyList = document.getElementById("historyList");
+const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+
+// LocalStorage History Key
+const HISTORY_KEY = "plant_companion_history_v1";
+
+function loadHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveHistory(history) {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-30))); // Keep last 30 turns
+  } catch (e) {}
+}
+
+function renderHistorySidebar() {
+  const history = loadHistory();
+  historyList.innerHTML = "";
+  if (!history.length) {
+    historyList.innerHTML = '<div class="history-empty">尚無對話記錄。<br>與 Plant Companion 對話後即可在此查看歷史回顧！</div>';
+    return;
+  }
+  // Render newest first
+  for (let i = history.length - 1; i >= 0; i--) {
+    const item = history[i];
+    const div = el("div", "history-item");
+    
+    const time = el("div", "history-time");
+    time.innerHTML = `<span class="material-symbols-outlined" style="font-size:.9rem;color:#888;">schedule</span> ${item.time || ""}`;
+    div.appendChild(time);
+
+    const user = el("div", "history-user", item.userText);
+    div.appendChild(user);
+
+    const agentPreview = el("div", "history-agent-preview", item.agentPreview || "(回傳卡片或圖形元件)");
+    div.appendChild(agentPreview);
+
+    historyList.appendChild(div);
+  }
+}
+
+function openSidebar() {
+  renderHistorySidebar();
+  sidebar.classList.add("open");
+  overlay.classList.add("open");
+}
+
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("open");
+}
+
+menuBtn.addEventListener("click", openSidebar);
+closeBtn.addEventListener("click", closeSidebar);
+overlay.addEventListener("click", closeSidebar);
+
+clearHistoryBtn.addEventListener("click", () => {
+  if (confirm("確定要清除所有對話歷史記錄嗎？")) {
+    localStorage.removeItem(HISTORY_KEY);
+    renderHistorySidebar();
+  }
+});
 
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
@@ -62,14 +330,6 @@ function bubble(who) {
   return b;
 }
 
-/* ----------------------------------------------------------------------------
- * A2UI mini-renderer (v0.8 Basic Catalog subset).
- * Renders Card / Column / Row / Text / Divider / List / Image / Icon.
- * Anything else falls back to plain text (see renderReply). All text goes in via
- * textContent and image URLs are validated, so agent output can't inject HTML.
- * -------------------------------------------------------------------------- */
-
-// A "bound value" is usually {literalString: "..."}; we only support literals.
 function boundStr(v) {
   if (v == null) return "";
   if (typeof v === "string") return v;
@@ -77,7 +337,6 @@ function boundStr(v) {
   return "";
 }
 
-// child ids of a component's props: single `child` and/or `children.explicitList`.
 function childIds(props) {
   const ids = [];
   if (props && typeof props.child === "string") ids.push(props.child);
@@ -86,11 +345,10 @@ function childIds(props) {
   return ids;
 }
 
-// A2UI icon names are camelCase (locationOn); Material Symbols wants snake_case.
 function iconName(n) { return String(n || "").replace(/([a-z0-9])([A-Z])/g, "$1_$2").replace(/\s+/g, "_").toLowerCase(); }
 
 function buildNode(id, comps, seen) {
-  if (!id || seen.has(id)) return null;   // missing / cycle guard
+  if (!id || seen.has(id)) return null;
   seen.add(id);
   const spec = comps[id];
   if (!spec || typeof spec !== "object") return null;
@@ -123,19 +381,17 @@ function buildNode(id, comps, seen) {
       return el("hr", "a2divider");
     case "Image": {
       const src = boundStr(props.url || props.src);
-      if (!/^https?:\/\//i.test(src)) return null;   // only allow safe URLs
+      if (!/^https?:\/\//i.test(src)) return null;
       const img = el("img", "a2img"); img.src = src; img.alt = boundStr(props.alt) || ""; return img;
     }
     case "Icon": {
       const s = el("span", "material-symbols-outlined"); s.textContent = iconName(boundStr(props.name) || props.name); return s;
     }
     default:
-      return null;   // unknown component -> skipped (text fallback covers content)
+      return null;
   }
 }
 
-// Render one or more A2UI messages (beginRendering + surfaceUpdate) into `container`.
-// Returns true if anything was drawn.
 function renderSurface(messages, container) {
   const comps = {};
   const roots = [];
@@ -145,7 +401,7 @@ function renderSurface(messages, container) {
     if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.id && c.component) comps[c.id] = c.component;
   }
   let rootIds = roots.filter(r => comps[r]);
-  if (rootIds.length === 0) {   // no valid root given -> infer un-referenced components
+  if (rootIds.length === 0) {
     const referenced = new Set();
     for (const id in comps) { const spec = comps[id]; childIds(spec[Object.keys(spec)[0]] || {}).forEach(c => referenced.add(c)); }
     rootIds = Object.keys(comps).filter(id => !referenced.has(id));
@@ -155,18 +411,17 @@ function renderSurface(messages, container) {
   return drew;
 }
 
-// Fallback: pull every Text value out of the messages as plain text.
 function flattenText(messages) {
   const out = [];
   for (const m of messages) {
     const su = m.surfaceUpdate;
     if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.component && c.component.Text) out.push(boundStr(c.component.Text.text));
   }
-  return out.join("\n").trim();
+  return out.join(" ").trim();
 }
 
 function renderReply(b, parts) {
-  b.textContent = "";   // clear the "…" placeholder
+  b.textContent = "";
   const texts = parts.filter(p => p && (p.kind === "text" || (!p.kind && p.text))).map(p => p.text || "");
   const a2ui = parts.filter(p => p && p.kind === "a2ui" && p.data).map(p => p.data);
 
@@ -179,9 +434,15 @@ function renderReply(b, parts) {
   }
   if (!b.childNodes.length) b.textContent = "(no response)";
   log.scrollTop = log.scrollHeight;
+
+  // Compute text preview for history
+  let preview = textStr;
+  if (!preview && a2ui.length) {
+    preview = flattenText(a2ui) || "🌿 [A2UI 互動式資訊卡片]";
+  }
+  return preview || "(無文字回覆)";
 }
 
-// The proxy returns { parts: [{kind:"text",text} | {kind:"a2ui",data}] }.
 form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const text = input.value.trim();
@@ -191,14 +452,23 @@ form.addEventListener("submit", async (ev) => {
   const b = bubble("agent"); b.textContent = "…";
   try {
     const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
-    // Read as text first, then parse. If the proxy ever returns a non-JSON error
-    // page (e.g. a plain "Internal Server Error"), show that body instead of a
-    // cryptic "Unexpected token" JSON error.
     const raw = await res.text();
     let data;
     try { data = JSON.parse(raw); }
     catch { throw new Error(`Server returned non-JSON (HTTP ${res.status}). ${raw.slice(0, 300)}`); }
-    renderReply(b, data.parts || []);
+    const preview = renderReply(b, data.parts || []);
+
+    // Record turn to local history
+    const history = loadHistory();
+    const now = new Date();
+    const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    history.push({
+      time: timeStr,
+      userText: text,
+      agentPreview: preview
+    });
+    saveHistory(history);
+
   } catch (e) {
     b.textContent = "Error: " + e.message;
   }
