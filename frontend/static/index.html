@@ -3,27 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Plant Companion 🎄 聖誕限定版</title>
+<title>Plant Companion ❄️ aespa Winter Cyber-Frost Edition</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --xmas-green: #1d5333;
-    --xmas-green-hover: #143e26;
-    --xmas-red: #c0392b;
-    --xmas-red-dark: #962d22;
-    --xmas-gold: #f39c12;
-    --xmas-cream: #fbf9f5;
-    --xmas-card-bg: #ffffff;
-    --border: #e2d9cd;
-    --text-main: #2c3e50;
+    --winter-ice: #00f2fe;
+    --winter-cyan: #4facfe;
+    --winter-frost: #e0f7fa;
+    --winter-purple: #9b51e0;
+    --winter-deep-purple: #170d2b;
+    --winter-bg: #090614;
+    --winter-card-bg: rgba(22, 16, 42, 0.75);
+    --winter-card-border: rgba(79, 172, 254, 0.35);
+    --winter-glow: rgba(0, 242, 254, 0.45);
+    --winter-sparkle: #ff76ac;
+    --winter-text: #f0f6fc;
+    --winter-text-sub: #a5b4fc;
+    --border: rgba(147, 197, 253, 0.22);
     --sidebar-w: 320px;
-    --header-height: 56px;
+    --header-height: 58px;
   }
   * { box-sizing: border-box; }
   html {
     width: 100%;
     height: 100%;
-    background: var(--xmas-green);
+    background: var(--winter-bg);
   }
   body {
     margin: 0;
@@ -36,29 +41,39 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    background: var(--xmas-cream);
-    color: var(--text-main);
+    font-family: 'Outfit', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at 15% 15%, #180d33 0%, #0a0618 55%, #05030b 100%);
+    color: var(--winter-text);
     display: flex;
     flex-direction: column;
-    background-image: 
-      radial-gradient(circle at 10% 20%, rgba(192, 57, 43, 0.04) 0%, transparent 20%),
-      radial-gradient(circle at 90% 80%, rgba(29, 83, 51, 0.05) 0%, transparent 25%);
   }
 
-  /* Header - Fixed & Always Visible */
+  /* Falling Snowflakes & Cyber Dust Canvas */
+  #snowCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Header - aespa Winter Futuristic Ice-Glass */
   header {
-    background: linear-gradient(135deg, var(--xmas-green) 0%, #154326 60%, var(--xmas-red-dark) 100%);
+    background: linear-gradient(135deg, rgba(20, 12, 38, 0.9) 0%, rgba(13, 24, 48, 0.95) 50%, rgba(26, 12, 45, 0.9) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: #fff;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.1rem;
     padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 3px 8px rgba(0,0,0,.15);
+    box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15), 0 1px 0 rgba(0, 242, 254, 0.35);
     z-index: 50;
-    border-bottom: 2px solid var(--xmas-gold);
+    border-bottom: 1.5px solid rgba(0, 242, 254, 0.3);
     flex-shrink: 0;
     width: 100%;
     position: relative;
@@ -70,54 +85,67 @@
     min-width: 0;
   }
   .hamburger-btn {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: #fff;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    color: var(--winter-ice);
     cursor: pointer;
     padding: 6px;
-    border-radius: 8px;
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
   }
-  .hamburger-btn:active, .hamburger-btn:hover { background: rgba(255,255,255,0.3); }
-  .hamburger-btn span { font-size: 1.45rem; color: #fff; display: block; }
+  .hamburger-btn:active, .hamburger-btn:hover {
+    background: rgba(0, 242, 254, 0.2);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    transform: scale(1.05);
+  }
+  .hamburger-btn span { font-size: 1.45rem; color: var(--winter-ice); display: block; }
   .header-title {
-    font-size: 1.12rem;
+    font-size: 1.15rem;
+    font-weight: 800;
     display: flex;
     align-items: center;
-    gap: .4rem;
-    letter-spacing: 0.2px;
+    gap: .45rem;
+    letter-spacing: 0.6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    background: linear-gradient(135deg, #ffffff 10%, #80d0ff 50%, #e0aaff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
   }
   .header-badge {
-    background: var(--xmas-red);
-    color: #fff;
+    background: linear-gradient(135deg, rgba(155, 81, 224, 0.5) 0%, rgba(0, 242, 254, 0.5) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.6);
+    color: #ffffff;
     font-size: .72rem;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    padding: 3px 10px;
+    border-radius: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.35);
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     flex-shrink: 0;
+    text-transform: uppercase;
   }
 
   /* Drawer / Overlay */
   .overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(18, 30, 23, 0.55);
+    background: rgba(5, 3, 12, 0.75);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 60;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(5px);
   }
   .overlay.open {
     opacity: 1;
@@ -130,27 +158,36 @@
     bottom: 0;
     width: var(--sidebar-w);
     max-width: 85vw;
-    background: #fff;
-    box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+    background: rgba(14, 10, 28, 0.95);
+    backdrop-filter: blur(15px);
+    box-shadow: 6px 0 30px rgba(0, 242, 254, 0.2);
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     z-index: 70;
-    border-right: 2px solid var(--xmas-gold);
+    border-right: 1.5px solid rgba(0, 242, 254, 0.35);
   }
   .sidebar.open {
     transform: translateX(0);
   }
   .sidebar-header {
-    background: linear-gradient(135deg, var(--xmas-green) 0%, var(--xmas-red-dark) 100%);
+    background: linear-gradient(135deg, rgba(23, 13, 43, 0.95) 0%, rgba(10, 20, 42, 0.95) 100%);
     color: #fff;
     padding: calc(1rem + env(safe-area-inset-top, 0px)) 1rem 1rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 242, 254, 0.25);
   }
-  .sidebar-header h2 { margin: 0; font-size: 1.05rem; display: flex; align-items: center; gap: .5rem; }
+  .sidebar-header h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--winter-ice);
+  }
   .close-btn {
     background: transparent;
     border: none;
@@ -160,7 +197,7 @@
     border-radius: 6px;
     display: flex;
   }
-  .close-btn:hover { background: rgba(255,255,255,0.2); }
+  .close-btn:hover { background: rgba(0, 242, 254, 0.15); color: var(--winter-ice); }
   .sidebar-content {
     flex: 1;
     overflow-y: auto;
@@ -168,33 +205,34 @@
     display: flex;
     flex-direction: column;
     gap: .75rem;
-    background: #fdfcf9;
+    background: transparent;
     -webkit-overflow-scrolling: touch;
   }
   .history-empty {
-    color: #888;
-    font-size: .92rem;
+    color: var(--winter-text-sub);
+    font-size: .9rem;
     text-align: center;
     margin-top: 2rem;
     line-height: 1.6;
   }
   .history-item {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: .8rem;
-    background: #fff;
-    transition: all 0.2s;
-    border-left: 4px solid var(--xmas-green);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 12px;
+    padding: .85rem;
+    background: rgba(22, 16, 42, 0.6);
+    transition: all 0.25s ease;
+    border-left: 3px solid var(--winter-cyan);
     cursor: pointer;
   }
   .history-item:hover {
-    border-color: var(--xmas-red);
-    background: #fffbfa;
-    border-left: 4px solid var(--xmas-red);
+    border-color: var(--winter-ice);
+    background: rgba(30, 20, 60, 0.8);
+    border-left: 3px solid var(--winter-ice);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
   }
   .history-time {
     font-size: .72rem;
-    color: #888;
+    color: var(--winter-text-sub);
     margin-bottom: .3rem;
     display: flex;
     align-items: center;
@@ -202,14 +240,14 @@
   }
   .history-user {
     font-weight: 600;
-    color: #2c3e50;
+    color: #fff;
     font-size: .88rem;
     margin-bottom: .25rem;
     word-break: break-word;
   }
   .history-agent-preview {
     font-size: .8rem;
-    color: #666;
+    color: #b0c0e0;
     line-height: 1.35;
     overflow: hidden;
     display: -webkit-box;
@@ -219,40 +257,43 @@
   }
   .sidebar-footer {
     padding: calc(0.8rem + env(safe-area-inset-bottom, 0px)) 1rem 0.8rem 1rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(0, 242, 254, 0.2);
     display: flex;
     justify-content: flex-end;
-    background: #fff;
+    background: rgba(10, 6, 20, 0.9);
   }
   .clear-btn {
-    background: #fde8e8;
-    color: var(--xmas-red);
-    border: 1px solid #f8b4b4;
-    border-radius: 6px;
+    background: rgba(255, 118, 172, 0.15);
+    color: #ff85b3;
+    border: 1px solid rgba(255, 118, 172, 0.4);
+    border-radius: 8px;
     padding: .45rem .85rem;
     font-size: .82rem;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s;
   }
-  .clear-btn:hover { background: #fbd5d5; }
+  .clear-btn:hover { background: rgba(255, 118, 172, 0.3); color: #fff; }
 
-  /* Chat Log & Message Rows with Avatars */
+  /* Chat Log & Message Rows */
   #log {
     flex: 1 1 0;
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 1rem 1rem .5rem 1rem;
-    max-width: 860px;
+    padding: 1.2rem 1.1rem .6rem 1.1rem;
+    max-width: 880px;
     width: 100%;
     margin: 0 auto;
     -webkit-overflow-scrolling: touch;
+    position: relative;
+    z-index: 5;
   }
   
   .chat-row {
-    margin: 1rem 0;
+    margin: 1.1rem 0;
     display: flex;
-    gap: .65rem;
+    gap: .75rem;
     align-items: flex-start;
     width: 100%;
   }
@@ -263,34 +304,37 @@
     flex-direction: row;
   }
 
-  /* Avatars */
+  /* Avatars - aespa Winter Cyber-Goddess Styling */
   .avatar {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    border: 2px solid #fff;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
     user-select: none;
+    position: relative;
   }
   .avatar.agent {
-    background: linear-gradient(135deg, #1d5333 0%, #2e7d32 100%);
-    box-shadow: 0 0 0 2px var(--xmas-gold), 0 2px 6px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    box-shadow: 0 0 18px rgba(0, 242, 254, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.4);
+    border: 1.5px solid var(--winter-ice);
   }
   .avatar.user {
-    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
-    box-shadow: 0 0 0 2px #ffcdd2, 0 2px 6px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #4b1248 0%, #f0c27b 100%);
+    box-shadow: 0 0 18px rgba(255, 118, 172, 0.5);
+    border: 1.5px solid #ff9ebb;
   }
 
   .msg-col {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    max-width: calc(100% - 48px);
+    max-width: calc(100% - 50px);
   }
   .chat-row.user .msg-col {
     align-items: flex-end;
@@ -300,49 +344,55 @@
   }
 
   .sender-meta {
-    font-size: .72rem;
-    color: #7f8c8d;
-    margin-bottom: .25rem;
+    font-size: .75rem;
+    color: var(--winter-text-sub);
+    margin-bottom: .3rem;
     display: flex;
     align-items: center;
-    gap: .4rem;
-    padding: 0 .25rem;
+    gap: .45rem;
+    padding: 0 .3rem;
+    letter-spacing: 0.3px;
   }
   .sender-name {
-    font-weight: 600;
+    font-weight: 700;
   }
   .chat-row.agent .sender-name {
-    color: var(--xmas-green);
+    color: var(--winter-ice);
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
   }
   .chat-row.user .sender-name {
-    color: var(--xmas-red);
+    color: #ff9ebb;
+    text-shadow: 0 0 10px rgba(255, 118, 172, 0.4);
   }
 
   .bubble {
     display: inline-block;
-    padding: .75rem 1.05rem;
-    border-radius: 14px;
-    background: var(--xmas-card-bg);
-    border: 1px solid var(--border);
+    padding: .85rem 1.15rem;
+    border-radius: 16px;
+    background: rgba(22, 16, 42, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 242, 254, 0.25);
     text-align: left;
     max-width: 100%;
     word-break: break-word;
     overflow-wrap: anywhere;
     white-space: pre-wrap;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    line-height: 1.5;
-    font-size: .95rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    line-height: 1.55;
+    font-size: .96rem;
+    color: var(--winter-text);
   }
   .chat-row.user .bubble {
-    background: linear-gradient(135deg, var(--xmas-red) 0%, #a93226 100%);
+    background: linear-gradient(135deg, rgba(155, 81, 224, 0.85) 0%, rgba(214, 51, 132, 0.85) 100%);
     color: #fff;
-    border: none;
+    border: 1px solid rgba(255, 150, 200, 0.4);
     border-top-right-radius: 4px;
-    box-shadow: 0 2px 8px rgba(192, 57, 43, 0.25);
+    box-shadow: 0 4px 20px rgba(214, 51, 132, 0.35);
   }
   .chat-row.agent .bubble {
     border-top-left-radius: 4px;
-    border-left: 3px solid var(--xmas-green);
+    border-left: 3px solid var(--winter-ice);
+    box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
   }
   .bubble.rich {
     background: transparent;
@@ -355,184 +405,221 @@
 
   .msg-time {
     font-size: .68rem;
-    color: #95a5a6;
-    margin-top: .25rem;
-    padding: 0 .3rem;
+    color: #7b88a8;
+    margin-top: .3rem;
+    padding: 0 .4rem;
   }
 
-  /* Welcome Card & Quick Suggestion Chips */
+  /* Welcome Card - aespa Winter Futuristic Cyber Garden */
   .welcome-card {
-    background: #ffffff;
-    border: 1px solid var(--border);
-    border-top: 4px solid var(--xmas-green);
-    border-radius: 14px;
-    padding: 1.1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    line-height: 1.55;
-    color: #2c3e50;
+    background: linear-gradient(145deg, rgba(23, 14, 45, 0.9) 0%, rgba(13, 26, 52, 0.9) 100%);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    border-top: 3px solid var(--winter-ice);
+    border-radius: 16px;
+    padding: 1.25rem 1.35rem;
+    box-shadow: 0 8px 32px rgba(0, 242, 254, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    line-height: 1.6;
+    color: #f0f6fc;
     width: 100%;
     max-width: 100%;
     word-break: break-word;
+    position: relative;
+    overflow: hidden;
+  }
+  .welcome-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 70%);
+    pointer-events: none;
   }
   .welcome-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--xmas-green);
-    margin-bottom: .5rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: .6rem;
     display: flex;
     align-items: center;
-    gap: .4rem;
+    gap: .45rem;
     flex-wrap: wrap;
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 50%, #e0aaff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
   }
   .welcome-desc {
-    font-size: .88rem;
-    margin-bottom: .75rem;
-    color: #4a5568;
+    font-size: .92rem;
+    margin-bottom: .85rem;
+    color: #d1dcfa;
+    line-height: 1.6;
   }
   .welcome-feature-list {
-    margin: 0 0 .85rem 0;
-    padding-left: 1.2rem;
-    font-size: .85rem;
-    color: #4a5568;
+    margin: 0 0 .95rem 0;
+    padding-left: 1.25rem;
+    font-size: .88rem;
+    color: #c0d0f5;
   }
   .welcome-feature-list li {
-    margin-bottom: .3rem;
+    margin-bottom: .4rem;
+  }
+  .welcome-feature-list strong {
+    color: var(--winter-ice);
   }
   .suggestion-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: .45rem;
-    margin-top: .75rem;
-    border-top: 1px dashed var(--border);
-    padding-top: .75rem;
+    gap: .5rem;
+    margin-top: .85rem;
+    border-top: 1px dashed rgba(0, 242, 254, 0.3);
+    padding-top: .85rem;
   }
   .chip {
-    background: #edf6ef;
-    border: 1px solid #cce5d1;
-    color: var(--xmas-green);
-    padding: .35rem .7rem;
-    border-radius: 18px;
-    font-size: .8rem;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    color: var(--winter-frost);
+    padding: .4rem .8rem;
+    border-radius: 20px;
+    font-size: .82rem;
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
+    font-weight: 600;
+    transition: all 0.25s ease;
     user-select: none;
     display: inline-flex;
     align-items: center;
-    gap: .25rem;
+    gap: .3rem;
     white-space: normal;
     text-align: left;
     line-height: 1.3;
+    backdrop-filter: blur(8px);
   }
   .chip:active, .chip:hover {
-    background: var(--xmas-green);
-    color: #fff;
-    border-color: var(--xmas-green);
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.3) 0%, rgba(155, 81, 224, 0.4) 100%);
+    color: #ffffff;
+    border-color: var(--winter-ice);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    transform: translateY(-1px);
   }
 
   /* Form & Input - Docked securely to bottom */
   form {
     display: flex;
-    gap: .6rem;
-    padding: .75rem 1rem;
-    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-    border-top: 1px solid var(--border);
-    background: #ffffff;
-    max-width: 860px;
+    gap: .7rem;
+    padding: .85rem 1.1rem;
+    padding-bottom: calc(0.85rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid rgba(0, 242, 254, 0.25);
+    background: rgba(14, 10, 28, 0.92);
+    backdrop-filter: blur(15px);
+    max-width: 880px;
     width: 100%;
     margin: 0 auto;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
-    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+    border-radius: 14px 14px 0 0;
     flex-shrink: 0;
     position: relative;
     z-index: 10;
   }
   input {
     flex: 1;
-    padding: .75rem .95rem;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
+    padding: .8rem 1.05rem;
+    border: 1.5px solid rgba(0, 242, 254, 0.3);
+    border-radius: 12px;
     font-size: 16px;
     outline: none;
-    background: #faf8f5;
-    transition: all 0.2s;
+    background: rgba(22, 16, 42, 0.85);
+    color: #fff;
+    transition: all 0.25s ease;
     min-width: 0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  input::placeholder {
+    color: #7d8ba8;
   }
   input:focus {
-    border-color: var(--xmas-green);
-    background: #fff;
-    box-shadow: 0 0 0 2px rgba(29, 83, 51, 0.12);
+    border-color: var(--winter-ice);
+    background: rgba(30, 22, 58, 0.95);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
   }
   button.send-btn {
-    padding: .75rem 1.25rem;
+    padding: .8rem 1.35rem;
     border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--xmas-green) 0%, #154326 100%);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9b51e0 100%);
     color: #fff;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     display: flex;
     align-items: center;
-    gap: .25rem;
-    box-shadow: 0 2px 6px rgba(29, 83, 51, 0.25);
+    gap: .35rem;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
     flex-shrink: 0;
     font-size: .95rem;
+    letter-spacing: 0.5px;
   }
   button.send-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
   }
 
-  /* A2UI components - Christmas themed & Mobile optimized */
+  /* A2UI components - aespa Winter Cyber Frost Style */
   .a2card {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: .95rem;
-    background: #ffffff;
-    box-shadow: 0 3px 10px rgba(0,0,0,.07);
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    border-radius: 14px;
+    padding: 1.05rem;
+    background: rgba(20, 14, 40, 0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 25px rgba(0, 242, 254, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     width: 100%;
     max-width: 100%;
-    border-top: 3px solid var(--xmas-green);
+    border-top: 3px solid var(--winter-ice);
     word-break: break-word;
     overflow-wrap: anywhere;
+    color: #f0f6fc;
   }
-  .a2card + .a2card, .a2col > .a2card { margin-top: .6rem; }
-  .a2col { display: flex; flex-direction: column; gap: .45rem; width: 100%; max-width: 100%; }
-  .a2row { display: flex; flex-direction: row; gap: .5rem; align-items: center; flex-wrap: wrap; width: 100%; max-width: 100%; }
+  .a2card + .a2card, .a2col > .a2card { margin-top: .65rem; }
+  .a2col { display: flex; flex-direction: column; gap: .5rem; width: 100%; max-width: 100%; }
+  .a2row { display: flex; flex-direction: row; gap: .55rem; align-items: center; flex-wrap: wrap; width: 100%; max-width: 100%; }
   .a2row.between { justify-content: space-between; }
-  .a2text { margin: 0; line-height: 1.45; word-break: break-word; }
-  .a2text.a2-h1 { font-size: 1.3rem; font-weight: 700; color: var(--xmas-green); }
-  .a2text.a2-h2 { font-size: 1.15rem; font-weight: 700; color: var(--xmas-green); border-bottom: 1.5px solid #edf4ee; padding-bottom: .25rem; }
-  .a2text.a2-h3 { font-size: 1.02rem; font-weight: 600; color: var(--xmas-red); }
-  .a2text.a2-h4 { font-size: .95rem; font-weight: 600; color: #2c3e50; }
-  .a2text.a2-caption { font-size: .8rem; color: #7f8c8d; }
-  .a2divider { border: none; border-top: 1px dashed var(--border); margin: .4rem 0; width: 100%; }
-  .a2img { max-width: 100%; height: auto; border-radius: 8px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,.12); border: 2px solid #fff; }
-  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.25rem; line-height: 1; vertical-align: middle; color: var(--xmas-green); }
+  .a2text { margin: 0; line-height: 1.5; word-break: break-word; color: #e2e8f0; }
+  .a2text.a2-h1 { font-size: 1.35rem; font-weight: 800; color: #ffffff; text-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
+  .a2text.a2-h2 { font-size: 1.18rem; font-weight: 700; color: var(--winter-ice); border-bottom: 1px solid rgba(0, 242, 254, 0.25); padding-bottom: .3rem; }
+  .a2text.a2-h3 { font-size: 1.05rem; font-weight: 700; color: #ff9ebb; }
+  .a2text.a2-h4 { font-size: .98rem; font-weight: 600; color: var(--winter-frost); }
+  .a2text.a2-caption { font-size: .82rem; color: #9aa9cc; }
+  .a2divider { border: none; border-top: 1px dashed rgba(0, 242, 254, 0.25); margin: .45rem 0; width: 100%; }
+  .a2img { max-width: 100%; height: auto; border-radius: 10px; display: block; box-shadow: 0 0 25px rgba(0, 242, 254, 0.3); border: 1.5px solid rgba(0, 242, 254, 0.5); }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.25rem; line-height: 1; vertical-align: middle; color: var(--winter-ice); }
 
   /* Responsive Mobile Overrides */
   @media (max-width: 600px) {
     header { padding-left: .85rem; padding-right: .85rem; padding-top: calc(0.6rem + env(safe-area-inset-top, 0px)); padding-bottom: 0.6rem; }
     .header-title { font-size: 1.02rem; }
-    .header-badge { font-size: .65rem; padding: 2px 6px; }
+    .header-badge { font-size: .65rem; padding: 2px 7px; }
     #log { padding: .75rem .75rem .4rem .75rem; }
     .chat-row { gap: .5rem; margin: .85rem 0; }
-    .avatar { width: 34px; height: 34px; font-size: 1.05rem; }
-    .msg-col { max-width: calc(100% - 42px); }
-    .bubble { padding: .65rem .85rem; font-size: .9rem; border-radius: 12px; }
-    .welcome-card { padding: .95rem .85rem; }
-    .welcome-title { font-size: .98rem; }
-    .welcome-desc { font-size: .84rem; }
-    .welcome-feature-list { font-size: .82rem; padding-left: 1.1rem; }
-    .chip { font-size: .76rem; padding: .3rem .6rem; }
-    form { padding: .6rem .75rem calc(0.6rem + env(safe-area-inset-bottom, 0px)) .75rem; gap: .45rem; border-radius: 0; }
-    input { padding: .65rem .8rem; }
-    button.send-btn { padding: .65rem .95rem; font-size: .88rem; }
-    .a2card { padding: .8rem; }
+    .avatar { width: 36px; height: 36px; font-size: 1.1rem; }
+    .msg-col { max-width: calc(100% - 44px); }
+    .bubble { padding: .7rem .95rem; font-size: .92rem; border-radius: 14px; }
+    .welcome-card { padding: 1rem .9rem; }
+    .welcome-title { font-size: 1.02rem; }
+    .welcome-desc { font-size: .86rem; }
+    .welcome-feature-list { font-size: .84rem; padding-left: 1.15rem; }
+    .chip { font-size: .78rem; padding: .32rem .65rem; }
+    form { padding: .65rem .75rem calc(0.65rem + env(safe-area-inset-bottom, 0px)) .75rem; gap: .45rem; border-radius: 0; }
+    input { padding: .7rem .85rem; }
+    button.send-btn { padding: .7rem 1.05rem; font-size: .9rem; }
+    .a2card { padding: .85rem; }
   }
 </style>
 </head>
 <body>
+
+<!-- Interactive Snowfall & Cyber-Frost Canvas -->
+<canvas id="snowCanvas"></canvas>
 
 <header>
   <div class="header-left">
@@ -540,14 +627,14 @@
       <span class="material-symbols-outlined">menu</span>
     </button>
     <div class="header-title">
-      <span>🎄</span>
-      <span>Plant Companion</span>
-      <span>🌿</span>
+      <span>❄️</span>
+      <span>PLANT COMPANION</span>
+      <span>🦋</span>
     </div>
   </div>
   <div class="header-badge">
-    <span>❄️</span>
-    <span>Winter</span>
+    <span>✨</span>
+    <span>WINTER · aespa</span>
   </div>
 </header>
 
@@ -555,30 +642,89 @@
 
 <aside id="sidebar" class="sidebar">
   <div class="sidebar-header">
-    <h2><span class="material-symbols-outlined" style="color:#fff;">auto_stories</span> 對話歷史記錄</h2>
+    <h2><span class="material-symbols-outlined" style="color:var(--winter-ice);">auto_stories</span> 對話記憶庫 · MEMORY</h2>
     <button id="closeBtn" class="close-btn" aria-label="關閉">
       <span class="material-symbols-outlined" style="color:#fff;">close</span>
     </button>
   </div>
   <div id="historyList" class="sidebar-content">
-    <div class="history-empty">尚無對話記錄。<br>與聖誕版 Plant Companion 對話後即可在此查看回顧！</div>
+    <div class="history-empty">尚無對話記錄。<br>與 Winter 綠植夥伴交談後即可在此調閱回顧！</div>
   </div>
   <div class="sidebar-footer">
-    <button id="clearHistoryBtn" class="clear-btn">清除歷史</button>
+    <button id="clearHistoryBtn" class="clear-btn">重設記憶</button>
   </div>
 </aside>
 
 <div id="log"></div>
 
 <form id="form">
-  <input id="input" placeholder="詢問聖誕植物照護、冬季澆水、附近花店或生成植物插畫…" autocomplete="off" autofocus>
+  <input id="input" placeholder="詢問極寒植物照護、冬季澆水頻率、附近花市或召喚植物圖鑑插畫…" autocomplete="off" autofocus>
   <button class="send-btn">
-    <span>發送</span>
-    <span style="font-size: .95rem;">🎁</span>
+    <span>傳送</span>
+    <span style="font-size: .95rem;">❄️</span>
   </button>
 </form>
 
 <script>
+// Canvas Snow & Frost Particle Animation
+const canvas = document.getElementById("snowCanvas");
+const ctx = canvas.getContext("2d");
+
+let width, height;
+function resizeCanvas() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+const particles = [];
+const particleCount = 45;
+
+for (let i = 0; i < particleCount; i++) {
+  particles.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    radius: Math.random() * 2.2 + 0.8,
+    speedY: Math.random() * 0.9 + 0.3,
+    speedX: Math.sin(i) * 0.4,
+    opacity: Math.random() * 0.65 + 0.25,
+    glow: Math.random() > 0.5
+  });
+}
+
+function renderSnow() {
+  ctx.clearRect(0, 0, width, height);
+  for (let p of particles) {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    if (p.glow) {
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = "#00f2fe";
+      ctx.fillStyle = `rgba(0, 242, 254, ${p.opacity})`;
+    } else {
+      ctx.shadowBlur = 4;
+      ctx.shadowColor = "#e0aaff";
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+    }
+    ctx.fill();
+
+    p.y += p.speedY;
+    p.x += p.speedX;
+
+    if (p.y > height) {
+      p.y = -5;
+      p.x = Math.random() * width;
+    }
+    if (p.x > width) p.x = 0;
+    if (p.x < 0) p.x = width;
+  }
+  ctx.shadowBlur = 0;
+  requestAnimationFrame(renderSnow);
+}
+requestAnimationFrame(renderSnow);
+
+// Main Chat Logic
 const log = document.getElementById("log");
 const form = document.getElementById("form");
 const input = document.getElementById("input");
@@ -610,7 +756,7 @@ function renderHistorySidebar() {
   const history = loadHistory();
   historyList.innerHTML = "";
   if (!history.length) {
-    historyList.innerHTML = '<div class="history-empty">尚無對話記錄。<br>與聖誕版 Plant Companion 對話後即可在此查看回顧！</div>';
+    historyList.innerHTML = '<div class="history-empty">尚無對話記錄。<br>與 Winter 綠植夥伴交談後即可在此調閱回顧！</div>';
     return;
   }
   for (let i = history.length - 1; i >= 0; i--) {
@@ -618,7 +764,7 @@ function renderHistorySidebar() {
     const div = el("div", "history-item");
     
     const time = el("div", "history-time");
-    time.innerHTML = `<span class="material-symbols-outlined" style="font-size:.85rem;color:#888;">schedule</span> ${item.time || ""}`;
+    time.innerHTML = `<span class="material-symbols-outlined" style="font-size:.85rem;color:var(--winter-ice);">schedule</span> ${item.time || ""}`;
     div.appendChild(time);
 
     const user = el("div", "history-user", item.userText);
@@ -653,7 +799,7 @@ closeBtn.addEventListener("click", closeSidebar);
 overlay.addEventListener("click", closeSidebar);
 
 clearHistoryBtn.addEventListener("click", () => {
-  if (confirm("確定要清除所有對話歷史記錄嗎？")) {
+  if (confirm("確定要重設所有記憶庫記錄嗎？")) {
     localStorage.removeItem(HISTORY_KEY);
     renderHistorySidebar();
   }
@@ -669,17 +815,17 @@ function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.
 function bubble(who) {
   const row = el("div", "chat-row " + who);
   
-  // Avatar
+  // Avatar - aespa Winter & Master
   const avatar = el("div", "avatar " + who);
-  avatar.innerHTML = who === "agent" ? "🎄" : "🧑‍🌾";
-  avatar.title = who === "agent" ? "Plant Companion (植物顧問)" : "你 (綠植主人)";
+  avatar.innerHTML = who === "agent" ? "❄️" : "✨";
+  avatar.title = who === "agent" ? "Winter (Plant Guardian)" : "You (MY / Greenery Master)";
   
   // Message Column
   const col = el("div", "msg-col");
   
   // Sender meta
   const meta = el("div", "sender-meta");
-  const name = el("span", "sender-name", who === "agent" ? "Plant Companion 🌿" : "你 🪴");
+  const name = el("span", "sender-name", who === "agent" ? "Winter ❄️ (Plant Companion)" : "MY 🌿 (綠植守護者)");
   meta.appendChild(name);
   col.appendChild(meta);
   
@@ -807,7 +953,7 @@ function renderReply(b, timeEl, parts) {
 
   let preview = textStr;
   if (!preview && a2ui.length) {
-    preview = flattenText(a2ui) || "🌿 [A2UI 互動式資訊卡片]";
+    preview = flattenText(a2ui) || "❄️ [A2UI 晶瑩資訊卡片]";
   }
   return preview || "(無文字回覆)";
 }
@@ -858,30 +1004,30 @@ function showWelcomeMessage() {
   const card = el("div", "welcome-card");
   
   const title = el("div", "welcome-title");
-  title.innerHTML = `<span>🎄</span> <span>歡迎來到 Plant Companion 冬季聖誕園藝小幫手！</span> <span>✨</span>`;
+  title.innerHTML = `<span>❄️</span> <span>Welcome to KWANGYA · Winter's Cyber Botanical Sanctuary</span> <span>🦋</span>`;
   card.appendChild(title);
 
   const desc = el("div", "welcome-desc");
-  desc.innerHTML = `你好！我是你的專屬智慧植物夥伴 🌿。不論是寒冬低溫的室內養護、澆水週期紀錄，或是搜尋附近花店與生成藝術插畫，我都能為你解答。`;
+  desc.innerHTML = `Hello, MY! 我是你的專屬植物守護者 <strong>Winter ❄️</strong>。在冰封寒冬與賽博綠意交織的曠野中，我隨時陪伴你呵護室內植栽、解鎖防寒奧秘與召喚藝術圖鑑。`;
   card.appendChild(desc);
 
   const list = el("ul", "welcome-feature-list");
   list.innerHTML = `
-    <li>📖 <strong>植物照護指引</strong>：查詢龜背竹、虎尾蘭等日照與寵物安全性</li>
-    <li>❄️ <strong>即時天氣與防寒</strong>：輸入城市獲取最新溫濕度與抗寒防凍建議</li>
-    <li>💧 <strong>澆水打卡登記</strong>：紀錄上次澆水日期並自動推算下一次澆水時機</li>
-    <li>🎨 <strong>復古植物繪圖</strong>：運用 Gemini 生成典雅的水彩植物圖鑑插畫</li>
-    <li>🏪 <strong>尋找附近花店</strong>：快速尋找周邊園藝中心與特色花店</li>
+    <li>📖 <strong>植物百科與照護數據</strong>：查詢龜背竹、虎尾蘭等日照強度與毛孩寵物安全性</li>
+    <li>❄️ <strong>即時天候與抗凍預警</strong>：輸入城市快速偵測溫濕度，為綠植啟動冬季防寒護盾</li>
+    <li>💧 <strong>澆水紀律與週期預測</strong>：打卡登記澆水狀態，智能推算下次最佳補水時機</li>
+    <li>🎨 <strong>Gemini 賽博水彩插畫</strong>：喚醒 Gemini 繪製典雅的植物圖鑑藝術畫作</li>
+    <li>🏪 <strong>植栽花市與綠意據點</strong>：即時尋找附近花店與園藝生活館</li>
   `;
   card.appendChild(list);
 
   const chipsContainer = el("div", "suggestion-chips");
   const suggestions = [
-    { label: "🌿 龜背竹冬季照護指南", query: "龜背竹在冬天的照護指南是什麼？" },
-    { label: "❄️ 查詢舊金山即時天氣防寒", query: "What is the weather in San Francisco and plant advice?" },
-    { label: "🎨 繪製虎尾蘭水彩插畫", query: "Please generate a botanical illustration of a Snake Plant" },
-    { label: "💧 登記琴葉榕澆水", query: "I just watered my Fiddle Leaf Fig today" },
-    { label: "🌸 尋找台北花店", query: "Find florists near Taipei, Taiwan" }
+    { label: "❄️ 龜背竹極寒越冬秘訣", query: "龜背竹在冬天的照護指南是什麼？" },
+    { label: "🌨️ 查詢舊金山即時防寒天候", query: "What is the weather in San Francisco and plant advice?" },
+    { label: "🎨 召喚虎尾蘭古典水彩插畫", query: "Please generate a botanical illustration of a Snake Plant" },
+    { label: "💧 登記琴葉榕補水打卡", query: "I just watered my Fiddle Leaf Fig today" },
+    { label: "🌸 搜尋台北特色花店據點", query: "Find florists near Taipei, Taiwan" }
   ];
 
   suggestions.forEach(s => {
