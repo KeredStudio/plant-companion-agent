@@ -49,7 +49,8 @@ _contexts: dict[str, str] = {}
 
 def _extract_parts_from_task(task: dict) -> list[dict]:
     out = []
-    # 1. Check artifacts for A2UI data
+
+    # 1. First, check artifacts for A2UI data (primary output when A2UI is rendered)
     artifacts = task.get("artifacts") or []
     for art in artifacts:
         parts = art.get("parts") or []
@@ -65,16 +66,22 @@ def _extract_parts_from_task(task: dict) -> list[dict]:
                 elif p.get("text"):
                     out.append({"kind": "text", "text": p["text"]})
 
-    # 2. Check history for agent text messages
+    # If artifacts already supplied output (A2UI surface or text), return to avoid duplicating with history
+    if out:
+        return out
+
+    # 2. If no artifacts were produced, extract the final agent message from history
     history = task.get("history") or []
-    for msg in history:
-        if isinstance(msg, dict) and msg.get("role") == "agent":
-            for p in msg.get("parts") or []:
-                if isinstance(p, dict) and p.get("kind") == "text" and p.get("text"):
+    agent_messages = [msg for msg in history if isinstance(msg, dict) and msg.get("role") == "agent"]
+    if agent_messages:
+        latest_msg = agent_messages[-1]
+        for p in latest_msg.get("parts") or []:
+            if isinstance(p, dict):
+                if p.get("kind") == "text" and p.get("text"):
                     out.append({"kind": "text", "text": p["text"]})
-                elif isinstance(p, dict) and p.get("text"):
+                elif p.get("text"):
                     out.append({"kind": "text", "text": p["text"]})
-                elif isinstance(p, dict) and p.get("data"):
+                elif p.get("data"):
                     dw = p.get("data")
                     if isinstance(dw, dict) and dw.get("metadata", {}).get("mimeType") == _A2UI_MIME:
                         out.append({"kind": "a2ui", "data": dw.get("data")})
@@ -106,7 +113,6 @@ async def chat(req: Request):
     async with httpx.AsyncClient(headers=_auth_headers(), timeout=120) as client:
         resp = await client.post(A2A_URL, json=payload)
         resp_data = resp.json()
-        logger.info("A2A Response status: %s", resp.status_code)
 
     task = resp_data.get("result", {})
     if task.get("contextId"):
