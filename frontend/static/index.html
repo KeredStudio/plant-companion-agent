@@ -59,6 +59,24 @@
     z-index: 1;
   }
 
+  /* Severe Cold Frost Alert Banner (Phase 4) */
+  .frost-alert-banner {
+    background: linear-gradient(90deg, rgba(255, 71, 87, 0.9) 0%, rgba(155, 81, 224, 0.9) 100%);
+    color: #fff;
+    padding: .45rem 1rem;
+    font-size: .8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 45;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 10px rgba(255, 71, 87, 0.3);
+  }
+  .frost-alert-banner span { display: flex; align-items: center; gap: .35rem; }
+  .alert-close { background: none; border: none; color: #fff; cursor: pointer; font-size: 1rem; }
+
   /* Header - aespa Winter Futuristic Ice-Glass */
   header {
     background: linear-gradient(135deg, rgba(20, 12, 38, 0.9) 0%, rgba(13, 24, 48, 0.95) 50%, rgba(26, 12, 45, 0.9) 100%);
@@ -120,11 +138,31 @@
     text-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
   }
 
-  /* Audio Lo-Fi BGM Player in Header */
+  /* Header Right Controls */
   .header-right {
     display: flex;
     align-items: center;
-    gap: .55rem;
+    gap: .5rem;
+  }
+  .persona-toggle-btn {
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    color: var(--winter-frost);
+    padding: 5px 8px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: .72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    transition: all 0.2s;
+  }
+  .persona-toggle-btn.active {
+    background: linear-gradient(135deg, #ff76ac 0%, #9b51e0 100%);
+    color: #fff;
+    border-color: #ff9ebb;
+    box-shadow: 0 0 12px rgba(255, 118, 172, 0.5);
   }
   .bgm-btn {
     background: rgba(155, 81, 224, 0.2);
@@ -547,6 +585,52 @@
     padding: 0 .4rem;
   }
 
+  /* Polar Postcard Component (Phase 3) */
+  .polaroid-postcard {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 12px 12px 18px 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(0, 242, 254, 0.4);
+    color: #1a1a1a;
+    display: inline-block;
+    max-width: 320px;
+    margin: .5rem 0;
+    border: 1px solid rgba(0, 242, 254, 0.3);
+  }
+  .polaroid-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+  }
+  .polaroid-caption {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: .92rem;
+    margin-top: 10px;
+    text-align: center;
+    color: #2d3748;
+  }
+  .polaroid-sub {
+    font-size: .75rem;
+    color: #718096;
+    text-align: center;
+    margin-top: 2px;
+  }
+  .polaroid-dl-btn {
+    margin-top: 8px;
+    width: 100%;
+    padding: 6px;
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    border: none;
+    border-radius: 6px;
+    color: #000;
+    font-weight: 700;
+    font-size: .78rem;
+    cursor: pointer;
+  }
+
   /* Welcome Card */
   .welcome-card {
     background: linear-gradient(145deg, rgba(23, 14, 45, 0.9) 0%, rgba(13, 26, 52, 0.9) 100%);
@@ -631,10 +715,10 @@
     transform: translateY(-1px);
   }
 
-  /* Form & Input - Docked securely to bottom with Mic Voice Input */
+  /* Form & Input - Docked securely to bottom with Mic Voice Input & Quick Attachment */
   form {
     display: flex;
-    gap: .6rem;
+    gap: .55rem;
     padding: .85rem 1rem;
     padding-bottom: calc(0.85rem + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid rgba(0, 242, 254, 0.25);
@@ -670,7 +754,7 @@
     background: rgba(30, 22, 58, 0.95);
     box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
   }
-  .mic-btn {
+  .mic-btn, .photo-btn {
     background: rgba(0, 242, 254, 0.1);
     border: 1.5px solid rgba(0, 242, 254, 0.4);
     color: var(--winter-ice);
@@ -747,9 +831,10 @@
 
   /* Responsive Mobile Overrides */
   @media (max-width: 600px) {
-    header { padding-left: .85rem; padding-right: .85rem; padding-top: calc(0.6rem + env(safe-area-inset-top, 0px)); padding-bottom: 0.6rem; }
-    .header-title { font-size: 1rem; }
-    .bgm-btn { font-size: .7rem; padding: 4px 7px; }
+    header { padding-left: .75rem; padding-right: .75rem; padding-top: calc(0.6rem + env(safe-area-inset-top, 0px)); padding-bottom: 0.6rem; }
+    .header-title { font-size: .95rem; }
+    .persona-toggle-btn { font-size: .65rem; padding: 3px 6px; }
+    .bgm-btn { font-size: .68rem; padding: 4px 6px; }
     #log { padding: .75rem .75rem .4rem .75rem; }
     .chat-row { gap: .5rem; margin: .85rem 0; }
     .avatar { width: 36px; height: 36px; font-size: 1.1rem; }
@@ -760,9 +845,9 @@
     .welcome-desc { font-size: .86rem; }
     .welcome-feature-list { font-size: .84rem; padding-left: 1.15rem; }
     .chip { font-size: .78rem; padding: .32rem .65rem; }
-    form { padding: .65rem .75rem calc(0.65rem + env(safe-area-inset-bottom, 0px)) .75rem; gap: .45rem; border-radius: 0; }
+    form { padding: .65rem .75rem calc(0.65rem + env(safe-area-inset-bottom, 0px)) .75rem; gap: .4rem; border-radius: 0; }
     input { padding: .7rem .85rem; }
-    button.send-btn { padding: .7rem 1rem; font-size: .9rem; }
+    button.send-btn { padding: .7rem .95rem; font-size: .88rem; }
     .a2card { padding: .85rem; }
   }
 </style>
@@ -774,6 +859,12 @@
 
 <!-- Audio Element for Lyria Lo-Fi -->
 <audio id="bgmAudio" src="/winter_lofi.mp3" loop preload="auto"></audio>
+
+<!-- Cold Weather Warning Alert Banner (Phase 4) -->
+<div id="frostAlert" class="frost-alert-banner">
+  <span><span class="material-symbols-outlined" style="font-size:1.1rem;color:#fff;">ac_unit</span> ❄️ 極寒低溫預警：氣溫偏低，熱帶雨林植物（龜背竹、蔓綠絨）請移至離窗戶 1 公尺溫暖處避寒！</span>
+  <button class="alert-close" onclick="document.getElementById('frostAlert').style.display='none'">✕</button>
+</div>
 
 <header>
   <div class="header-left">
@@ -787,6 +878,10 @@
     </div>
   </div>
   <div class="header-right">
+    <button id="personaBtn" class="persona-toggle-btn" title="切換自述模式 (植物第一人稱撒嬌互動)">
+      <span class="material-symbols-outlined" style="font-size:.95rem;">sentiment_satisfied</span>
+      <span id="personaLabel">擬人化</span>
+    </button>
     <button id="bgmBtn" class="bgm-btn" title="播放 / 暫停 Lyria Lo-Fi 音樂">
       <span class="material-symbols-outlined" style="font-size:1.1rem;color:var(--winter-ice);" id="bgmIcon">music_note</span>
       <span>BGM</span>
@@ -835,9 +930,19 @@
         <div class="badge-desc">按時打卡補水 3 次以上</div>
       </div>
       <div class="badge-item">
+        <div class="badge-icon">🩺</div>
+        <div class="badge-title">植物神醫</div>
+        <div class="badge-desc">成功診斷病蟲害與介質換盆</div>
+      </div>
+      <div class="badge-item">
         <div class="badge-icon">🎨</div>
         <div class="badge-title">典雅畫家</div>
         <div class="badge-desc">召喚 Gemini 植物水彩插圖</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">☀️</div>
+        <div class="badge-title">追光使者</div>
+        <div class="badge-desc">完成居家窗台採光評估</div>
       </div>
       <div class="badge-item">
         <div class="badge-icon">🦋</div>
@@ -856,15 +961,20 @@
 <div id="log"></div>
 
 <form id="form">
+  <button type="button" id="photoBtn" class="photo-btn" title="拍照診斷葉片發黃或蟲害 (上傳照片)">
+    <span class="material-symbols-outlined">add_a_photo</span>
+  </button>
   <button type="button" id="micBtn" class="mic-btn" title="語音輸入 (說出植物問題或澆水)">
     <span class="material-symbols-outlined">mic</span>
   </button>
-  <input id="input" placeholder="詢問極寒植物照護、冬季澆水頻率、附近花市或召喚植物圖鑑插畫…" autocomplete="off" autofocus>
+  <input id="input" placeholder="詢問病害診斷、換盆介質配比、施肥日程、採光方位或召喚插畫…" autocomplete="off" autofocus>
   <button class="send-btn">
     <span>傳送</span>
     <span style="font-size: .95rem;">❄️</span>
   </button>
 </form>
+
+<input type="file" id="filePicker" accept="image/*" style="display:none;">
 
 <script>
 // 1. Particle Canvas (Snow & Cyber Dust)
@@ -942,7 +1052,37 @@ bgmBtn.addEventListener("click", () => {
   }
 });
 
-// 3. Web Speech API (Voice Input)
+// 3. Talking Plant Persona Mode (Phase 3)
+let talkingPlantMode = false;
+const personaBtn = document.getElementById("personaBtn");
+const personaLabel = document.getElementById("personaLabel");
+
+personaBtn.addEventListener("click", () => {
+  talkingPlantMode = !talkingPlantMode;
+  if (talkingPlantMode) {
+    personaBtn.classList.add("active");
+    personaLabel.textContent = "植物自述中";
+    sendMessage("請切換為【植物自述模式】！請用家裡綠植的第一人稱（例如：『主人～我是你窗台邊的琴葉榕』）生動幽默地向我問好，並說說你現在的狀態與心情！");
+  } else {
+    personaBtn.classList.remove("active");
+    personaLabel.textContent = "擬人化";
+    sendMessage("請切換回 Winter 專家植物顧問模式。");
+  }
+});
+
+// 4. Photo Picker for Plant Doctor (Phase 2 & 3)
+const photoBtn = document.getElementById("photoBtn");
+const filePicker = document.getElementById("filePicker");
+
+photoBtn.addEventListener("click", () => filePicker.click());
+filePicker.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    sendMessage(`【拍照診斷上傳】我拍攝了一張植物葉片照片（檔名: ${file.name}），葉面似乎發黃並有褐色斑點，請替我進行病害診斷並提出急救指南！`);
+  }
+});
+
+// 5. Web Speech API (Voice Input)
 const micBtn = document.getElementById("micBtn");
 const input = document.getElementById("input");
 let recognition = null;
@@ -989,7 +1129,7 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   micBtn.style.display = "none";
 }
 
-// 4. Chat & Drawer
+// 6. Chat & Drawer
 const log = document.getElementById("log");
 const form = document.getElementById("form");
 const menuBtn = document.getElementById("menuBtn");
@@ -1030,7 +1170,6 @@ function saveHistory(history) {
   try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-30))); } catch {}
 }
 
-// Default virtual garden items
 const DEFAULT_GARDEN = [
   { name: "龜背竹 (Monstera Deliciosa)", interval: 7, lastWatered: "2026-11-18", nextDue: "2026-11-25", daysLeft: 5 },
   { name: "琴葉榕 (Fiddle Leaf Fig)", interval: 10, lastWatered: "2026-11-15", nextDue: "2026-11-25", daysLeft: 5 },
@@ -1140,12 +1279,13 @@ function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.
 function bubble(who) {
   const row = el("div", "chat-row " + who);
   const avatar = el("div", "avatar " + who);
-  avatar.innerHTML = who === "agent" ? "❄️" : "✨";
-  avatar.title = who === "agent" ? "Winter (Plant Guardian)" : "You (MY / Greenery Master)";
+  avatar.innerHTML = who === "agent" ? (talkingPlantMode ? "🪴" : "❄️") : "✨";
+  avatar.title = who === "agent" ? (talkingPlantMode ? "Talking Plant" : "Winter Guardian") : "MY Master";
   
   const col = el("div", "msg-col");
   const meta = el("div", "sender-meta");
-  const name = el("span", "sender-name", who === "agent" ? "Winter ❄️ (Plant Guardian)" : "MY 🌿 (綠植守護者)");
+  const agentTitle = talkingPlantMode ? "你的植栽小夥伴 🪴" : "Winter ❄️ (Plant Guardian)";
+  const name = el("span", "sender-name", who === "agent" ? agentTitle : "MY 🌿 (綠植守護者)");
   meta.appendChild(name);
   col.appendChild(meta);
   
@@ -1215,7 +1355,24 @@ function buildNode(id, comps, seen) {
     case "Image": {
       const src = boundStr(props.url || props.src);
       if (!/^https?:\/\//i.test(src)) return null;
-      const img = el("img", "a2img"); img.src = src; img.alt = boundStr(props.alt) || ""; return img;
+      
+      // Wrap into aespa Winter Polaroid Postcard (Phase 3)
+      const card = el("div", "polaroid-postcard");
+      const img = el("img", "polaroid-img");
+      img.src = src;
+      img.alt = boundStr(props.alt) || "Winter Botanical Art";
+      card.appendChild(img);
+
+      const cap = el("div", "polaroid-caption", boundStr(props.alt) || "KWANGYA BOTANICAL ARCHIVE");
+      card.appendChild(cap);
+      const sub = el("div", "polaroid-sub", "Limited Edition Postcard · Winter ❄️");
+      card.appendChild(sub);
+
+      const dl = el("button", "polaroid-dl-btn", "📥 下載珍藏明信片");
+      dl.onclick = () => window.open(src, "_blank");
+      card.appendChild(dl);
+
+      return card;
     }
     case "Icon": {
       const s = el("span", "material-symbols-outlined"); s.textContent = iconName(boundStr(props.name) || props.name); return s;
@@ -1325,25 +1482,26 @@ function showWelcomeMessage() {
   card.appendChild(title);
 
   const desc = el("div", "welcome-desc");
-  desc.innerHTML = `Hello, MY! 我是你的專屬植物守護者 <strong>Winter ❄️</strong>。在冰封寒冬與賽博綠意交織的曠野中，我隨時陪伴你呵護室內植栽、解鎖防寒奧秘與召喚藝術圖鑑。`;
+  desc.innerHTML = `Hello, MY! 我是你的專屬植物守護者 <strong>Winter ❄️</strong>。全套 12 大智慧綠植功能已全面解鎖，守護你的整個冬日植栽！`;
   card.appendChild(desc);
 
   const list = el("ul", "welcome-feature-list");
   list.innerHTML = `
-    <li>🎧 <strong>冬日 Lo-Fi 旋律</strong>：點擊右上角 BGM 播放器，聆聽專屬放鬆音樂</li>
-    <li>🎙️ <strong>語音打卡問答</strong>：手忙腳亂時點選麥克風，語音詢問或記錄澆水</li>
-    <li>🌱 <strong>我的花園儀表板</strong>：展開左上選單查看登記植物的澆水倒數</li>
-    <li>🎨 <strong>Gemini 藝術圖鑑</strong>：喚醒 Gemini 繪製典雅的植物圖鑑插畫</li>
+    <li>🩺 <strong>病害診斷與換盆計算</strong>：點擊相機或輸入「龜背竹葉子發黃」、「換盆計算」</li>
+    <li>☀️ <strong>窗台採光方位評估</strong>：輸入「我家窗戶朝南，適合種什麼？」</li>
+    <li>💬 <strong>植物自述模式</strong>：點擊頂部「擬人化」按鈕，讓植物親自對你撒嬌說話</li>
+    <li>🖼️ <strong>拍立得藝術明信片</strong>：召喚插畫並一鍵下載 Winter 拍立得明信片</li>
+    <li>🎧 <strong>Lo-Fi 音樂 & 語音輸入</strong>：右上角 BGM 播放器與下方麥克風</li>
   `;
   card.appendChild(list);
 
   const chipsContainer = el("div", "suggestion-chips");
   const suggestions = [
-    { label: "❄️ 龜背竹極寒越冬秘訣", query: "龜背竹在冬天的照護指南是什麼？" },
-    { label: "🌨️ 查詢舊金山即時防寒天候", query: "What is the weather in San Francisco and plant advice?" },
-    { label: "🎨 召喚虎尾蘭古典水彩插畫", query: "Please generate a botanical illustration of a Snake Plant" },
-    { label: "💧 登記琴葉榕補水打卡", query: "I just watered my Fiddle Leaf Fig today" },
-    { label: "🌸 搜尋台北特色花店據點", query: "Find florists near Taipei, Taiwan" }
+    { label: "🩺 診斷龜背竹葉片發黃", query: "My Monstera leaves are turning yellow and drooping, can you diagnose it?" },
+    { label: "🪴 虎尾蘭 15cm 換盆與介質配方", query: "幫我計算 15cm 虎尾蘭的換盆尺寸與介質配土" },
+    { label: "☀️ 朝東陽台適合養什麼植物？", query: "我家陽台朝東，請問光照如何？適合養什麼植物？" },
+    { label: "💊 登記琴葉榕施肥", query: "我剛剛給琴葉榕施了液態肥，幫我紀錄施肥日程" },
+    { label: "🎨 召喚龜背竹古典拍立得插畫", query: "Please generate a botanical illustration of a Monstera Deliciosa" }
   ];
 
   suggestions.forEach(s => {
