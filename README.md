@@ -1,4 +1,4 @@
-# Plant Companion ❄️ aespa Winter Cyber-Frost Edition
+# Plant Companion 🎄 Karina Warm Christmas & Winter Edition
 
 [English Version](#english-version) | [繁體中文版本](#繁體中文版本)
 
@@ -7,11 +7,11 @@
 <a name="繁體中文版本"></a>
 ## 繁體中文版本
 
-**Plant Companion ❄️（KWANGYA 曠野綠植夥伴）** 是一款融合 **aespa Winter 賽博冰霜美學** 與頂尖 Google 生成式 AI 技術的室內綠植智慧管家。
+**Plant Companion 🎄（綠植夥伴 · Karina 暖心聖誕版）** 是一款專為室內植栽愛好者打造的智慧對話顧問，融合 **Karina 暖心聖誕熱紅酒美學** 與 **aespa Winter 賽博冰霜美學** 雙風格，並深度整合 Google 最尖端的生成式 AI 技術。
 
-具備全套 **12 大智慧綠植照護功能**，包含：AI 葉片病害急救診斷、換盆與介質配比精算、季節休眠施肥排程、居家窗台採光方位評估、植物圖鑑水彩拍立得插畫生成、極寒低溫防凍警報、即時天氣防護、本地花市定位、Web Speech 語音對話、虛擬花園儀表板、綠手指成就勳章牆，以及超可愛的 Talking Plant 植物自述模式！
+本系統具備全套 **12 大智慧綠植照護功能**，並在前端提供**即時雙主題切換開關**（Karina 溫暖聖誕 🎄 / Winter 賽博冰霜 ❄️），粒子特效隨主題自動轉化為金色暖冬微火或冰晶雪花，陪伴您與家中的植物度過溫暖舒心的冬日！
 
-本專案採用 **Google ADK (Agent Development Kit)** 與 **Vertex AI Reasoning Engine (Agent Runtime)** 開發後端大腦，前端以 **Cloud Run** 託管 FastAPI A2A 代理伺服器與響應式 Cyber-Frost Web UI，全面支援 A2A JSON-RPC 協議與 **A2UI** 晶瑩動態卡片渲染。
+後端大腦以 **Google ADK (Agent Development Kit)** 與 **Vertex AI Reasoning Engine (Agent Runtime)** 構建，前端以 **Cloud Run** 託管 FastAPI A2A 代理伺服器與響應式雙主題 Web UI，全面支援 A2A JSON-RPC 協議與 **A2UI** 晶瑩動態卡片渲染。
 
 ---
 
@@ -19,6 +19,18 @@
 
 - **正式服務體驗網址**：[https://plant-companion-frontend-1038784917896.us-central1.run.app](https://plant-companion-frontend-1038784917896.us-central1.run.app)
 - **GitHub 儲存庫**：[https://github.com/KeredStudio/buildwithgemini-my-agent](https://github.com/KeredStudio/buildwithgemini-my-agent)
+
+---
+
+### 🎨 雙主題美學系統（Dual Aesthetic Experience）
+
+使用者可隨時點擊頂部導覽列右上角的 **主題切換按鈕**：
+1. **Karina 溫暖聖誕風格（預設）**：
+   - 勃根地熱紅酒酒紅、深木色與聖誕暖金（`#ffb703`）高光，搭配金黃暖冬微火星芒粒子動畫。
+   - 對話頭像切換為聖誕樹 `🎄` 與綠手指農夫 `🧑‍🌾`，伴隨暖調問候與專屬引導。
+2. **Winter 賽博冰霜風格**：
+   - KWANGYA 星雲暗紫、深邃夜幕與冰霓虹青藍（`#00f2fe`），搭配動態降雪冰晶粒子。
+   - 對話頭像切換為冰晶 `❄️` 與星芒 `✨`。
 
 ---
 
@@ -32,9 +44,9 @@ https://github.com/user-attachments/assets/plant-companion-demo (可下載或直
   您的瀏覽器不支援直接播放 WebM 影片，請點擊下載 <a href="./plant_companion_demo.webm">plant_companion_demo.webm</a>。
 </video>
 
-**Demo 兩大亮點：**
+**Demo 核心亮點：**
 1. **Firestore 資料庫查詢與 A2UI 卡片**：查詢龜背竹（*Monstera Deliciosa*）養護指南，包含光照、澆水頻率與寵物毒性，以結構化卡片漂亮排版。
-2. **Gemini 多模態圖片生成**：呼叫 `gemini-3.1-flash-lite-image` 生成復古水彩植物插畫並託管於 Google Cloud Storage。
+2. **Gemini 多模態圖片生成**：呼叫 `gemini-3.1-flash-lite-image` 生成古典水彩植物插畫並託管於 Google Cloud Storage。
 3. **AI 原創配樂**：由 Vertex AI 上的 Google **`lyria-002`** 音樂生成模型專屬譜曲。
 
 ---
@@ -46,7 +58,7 @@ https://github.com/user-attachments/assets/plant-companion-demo (可下載或直
 | **Phase 1** | 1 | 🎧 **冬日 Lyria Lo-Fi 播放器** | 頂部專屬 BGM 按鈕，隨時串流 Vertex AI Lyria 原創輕音樂與動態音波。 |
 | | 2 | 🎙️ **Web Speech API 語音輸入** | 專屬麥克風按鈕，免動手用語音進行照護提問與澆水打卡。 |
 | | 3 | 🌱 **我的花園儀表板 (Virtual Garden)** | 抽屜選單即時呈現植物水分倒數與「今日已澆水」快捷按鈕。 |
-| | 4 | 🎖️ **綠手指成就勳章牆** | 內建抗寒守護者、清泉水行俠、植物神醫等 6 大解鎖徽章。 |
+| | 4 | 🎖️ **綠手指成就勳章牆** | 內建抗寒守護者、清泉水行俠、植物神醫、Karina 溫暖同行等 6 大解鎖徽章。 |
 | **Phase 2** | 5 | 🩺 **AI 拍照與病害急救診斷** | 快速診斷葉黃、焦邊、蟲害，並以 A2UI 晶瑩卡片即時提供急救方案。 |
 | | 6 | 🪴 **換盆與介質配比計算機** | 輸入盆徑與植物品種，自動精算顆粒石、樹皮與泥炭土黃金比例。 |
 | | 7 | 💊 **季節性休眠施肥日程** | 結合 Firestore 記錄施肥，依當前月份智慧提示冬季休眠期減肥建議。 |
@@ -63,13 +75,13 @@ https://github.com/user-attachments/assets/plant-companion-demo (可下載或直
 ```
 my-agent/
 ├── app/                       # 後端 Agent 核心邏輯
-│   ├── agent.py               # ReAct Agent、工具定義、提示詞與 A2UI Schema
+│   ├── agent.py               # ReAct Agent、14 項工具定義、提示詞與 A2UI Schema
 │   ├── a2ui_utils.py          # A2UI 回調包裝器 (after_model_callback)
-│   └── firestore_service.py   # Firestore 資料庫 CRUD 輔助函式
+│   └── firestore_service.py   # Firestore 資料庫 CRUD 與澆水/施肥輔助函式
 ├── frontend/                  # 前端 Web Chat UI & A2A 代理伺服器
 │   ├── main.py                # FastAPI 伺服器，透過 A2A JSON-RPC 與 Agent Runtime 通訊
 │   ├── static/
-│   │   ├── index.html         # 響應式聊天前端（含 12 大功能、A2UI 渲染器、Cyber-Frost 主題）
+│   │   ├── index.html         # 響應式聊天前端（Karina/Winter 雙主題、12 大功能、A2UI 渲染器）
 │   │   └── winter_lofi.mp3    # Vertex AI Lyria 原創 Lo-Fi 背景音軌
 │   ├── requirements.txt       # 前端 Python 相依套件
 │   └── Dockerfile             # 前端 Cloud Run 容器打包檔
@@ -169,11 +181,11 @@ uvicorn main:app --port 8080
 <a name="english-version"></a>
 ## English Version
 
-**Plant Companion ❄️ (aespa Winter Cyber-Frost Edition)** is an intelligent conversational agent engineered for urban plant lovers, combining **aespa Winter's Cyber-Frost aesthetics** with Google's advanced Generative AI and botanical intelligence.
+**Plant Companion 🎄 (Karina Warm Christmas & Winter Edition)** is an intelligent conversational agent engineered for urban plant lovers, combining **Karina's warm Christmas mulled-wine aesthetic** and **aespa Winter's Cyber-Frost design** with Google's advanced Generative AI and botanical intelligence.
 
-Featuring a full suite of **12 smart botanical capabilities**: AI pest & disease emergency diagnosis, repotting & custom soil mix calculator, seasonal dormancy fertilizing schedule, room window sunlight orientation assessment, Gemini vintage watercolor Polaroid art generation, severe frost weather alerts, real-time climate advice, Google Maps nursery locator, Web Speech API voice input, Virtual Garden dashboard, Green Thumb achievement badge showcase, and a charming Talking Plant first-person persona!
+Featuring a full suite of **12 smart botanical capabilities** and a **1-click live theme switcher** (Karina Warm Christmas 🎄 / Winter Cyber-Frost ❄️) with adaptive particle canvas (warm golden embers vs. cool snow crystals), creating an immersive, cozy care experience for both you and your indoor greenery!
 
-Built with **Google ADK (Agent Development Kit)** and **Vertex AI Reasoning Engine (Agent Runtime)**, the frontend is hosted on **Cloud Run** serving a FastAPI A2A proxy and a mobile-responsive Cyber-Frost Web UI, fully supporting the A2A JSON-RPC protocol and **A2UI** interactive crystal card rendering.
+Built with **Google ADK (Agent Development Kit)** and **Vertex AI Reasoning Engine (Agent Runtime)**, the frontend is hosted on **Cloud Run** serving a FastAPI A2A proxy and a mobile-responsive dual-theme Web UI, fully supporting the A2A JSON-RPC protocol and **A2UI** interactive crystal card rendering.
 
 ---
 
@@ -181,6 +193,18 @@ Built with **Google ADK (Agent Development Kit)** and **Vertex AI Reasoning Engi
 
 - **Live Service URL**: [https://plant-companion-frontend-1038784917896.us-central1.run.app](https://plant-companion-frontend-1038784917896.us-central1.run.app)
 - **GitHub Repository**: [https://github.com/KeredStudio/buildwithgemini-my-agent](https://github.com/KeredStudio/buildwithgemini-my-agent)
+
+---
+
+### 🎨 Dual Aesthetic System
+
+Users can toggle themes dynamically using the **top-right switcher button**:
+1. **Karina Warm Christmas Theme (Default)**:
+   - Burgundy mulled wine red, dark wood, and festive warm gold (`#ffb703`) highlights, with golden warm ember particle effects.
+   - Dedicated Christmas tree `🎄` and Green Thumb `🧑‍🌾` avatars and warm holiday greetings.
+2. **Winter Cyber-Frost Theme**:
+   - KWANGYA nebula deep violet, cyber-dark gradient, and icy neon cyan (`#00f2fe`), paired with gentle falling snowflakes.
+   - Dedicated ice crystal `❄️` and sparkle `✨` avatars.
 
 ---
 
@@ -208,7 +232,7 @@ https://github.com/user-attachments/assets/plant-companion-demo (Download or pla
 | **Phase 1** | 1 | 🎧 **Winter Lyria Lo-Fi Player** | Dedicated header BGM toggle streaming original Lo-Fi music by Vertex AI Lyria with animated wave bars. |
 | | 2 | 🎙️ **Web Speech API Voice Input** | Hands-free voice recognition button to ask plant questions or check in watering. |
 | | 3 | 🌱 **Virtual Garden Dashboard** | Drawer panel displaying moisture countdowns and 1-click "Watered Today" logging. |
-| | 4 | 🎖️ **Green Thumb Achievement Badges** | Badge wall celebrating Frost Guardian, Aquamancer, Plant Healer, and MY Master milestones. |
+| | 4 | 🎖️ **Green Thumb Achievement Badges** | Badge wall celebrating Frost Guardian, Aquamancer, Plant Healer, and Karina Milestones. |
 | **Phase 2** | 5 | 🩺 **AI Plant Health Diagnosis** | Analyzes yellowing, brown tips, and spider mites, returning treatment actions in crystal A2UI cards. |
 | | 6 | 🪴 **Repotting & Soil Mix Calculator** | Calculates ideal upsized pot diameter and tailored soil recipes (peat, perlite, bark ratios). |
 | | 7 | 💊 **Seasonal Dormancy Fertilizer Log** | Logs fertilizer application to Firestore with winter dormancy frequency adjustments. |
@@ -231,7 +255,7 @@ my-agent/
 ├── frontend/                  # Web Chat UI & A2A Proxy
 │   ├── main.py                # FastAPI proxy communicating over A2A JSON-RPC
 │   ├── static/
-│   │   ├── index.html         # Responsive UI with 12 features, A2UI renderer & Cyber-Frost theme
+│   │   ├── index.html         # Responsive UI with Karina/Winter dual themes, 12 features & A2UI
 │   │   └── winter_lofi.mp3    # Original Lyria Lo-Fi track served locally
 │   ├── requirements.txt       # Frontend dependencies
 │   └── Dockerfile             # Cloud Run container definition
