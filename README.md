@@ -1,92 +1,60 @@
-# my-agent
+# Plant Companion 🌿
 
-Simple ReAct agent
-Agent generated with `agents-cli` version `1.4.0`
+**Plant Companion** is an intelligent conversational agent designed for urban plant enthusiasts to care for and nurture their home greenery with a catalog of plants, care reminders, and botanical utilities.
 
-## Project Structure
-
-```
-my-agent/
-├── app/         # Core agent code
-│   ├── agent.py               # Main agent logic
-│   ├── fast_api_app.py        # FastAPI Backend server
-│   └── app_utils/             # App utilities and helpers
-├── tests/                     # Unit, integration, and load tests
-├── GEMINI.md                  # AI-assisted development guide
-└── pyproject.toml             # Project dependencies
-```
-
-> 💡 **Tip:** Use [Antigravity CLI](https://antigravity.google/) for AI-assisted development - project context is pre-configured in `GEMINI.md`.
-
-## Requirements
-
-Before you begin, ensure you have:
-- **uv**: Python package manager (used for all dependency management in this project) - [Install](https://docs.astral.sh/uv/getting-started/installation/) ([add packages](https://docs.astral.sh/uv/concepts/dependencies/) with `uv add <package>`)
-- **agents-cli**: Agents CLI - Install with `uv tool install google-agents-cli`
-- **Google Cloud SDK**: For GCP services - [Install](https://cloud.google.com/sdk/docs/install)
-
-
-## Quick Start
-
-Install `agents-cli` and its skills if not already installed:
-
-```bash
-uvx google-agents-cli setup
-```
-
-Install required packages:
-
-```bash
-agents-cli install
-```
-
-Test the agent with a local web server:
-
-```bash
-agents-cli playground
-```
-
-You can also use features from the [ADK](https://adk.dev/) CLI with `uv run adk`.
-
-## Commands
-
-| Command              | Description                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------- |
-| `agents-cli install` | Install dependencies using uv                                                         |
-| `agents-cli playground` | Launch local development environment                                                  |
-| `agents-cli lint`    | Run code quality checks                                                               |
-| `agents-cli eval`    | Evaluate agent behavior (generate, grade, analyze, and more — see `agents-cli eval --help`) |
-| `uv run pytest tests/unit tests/integration` | Run unit and integration tests                                                        || [A2A Inspector](https://github.com/a2aproject/a2a-inspector) | Launch A2A Protocol Inspector                                                        |
-
-## 🛠️ Project Management
-
-| Command | What It Does |
-|---------|--------------|
-| `agents-cli scaffold enhance` | Add CI/CD pipelines and Terraform infrastructure |
-| `agents-cli infra cicd` | One-command setup of entire CI/CD pipeline + infrastructure |
-| `agents-cli scaffold upgrade` | Auto-upgrade to latest version while preserving customizations |
+Built with Google ADK, deployed to Vertex AI Agent Platform (Agent Runtime / Reasoning Engine) and served via a Cloud Run web chat frontend supporting the A2A protocol and rich A2UI interactive cards.
 
 ---
 
-## Development
+## Features
 
-Edit your agent logic in `app/agent.py` and test with `agents-cli playground` - it auto-reloads on save.
+- **Plant Care & Inventory Database**: Backed by Firestore for cataloging indoor plants (light, watering schedule, difficulty, pet toxicity).
+- **Watering Log & Tracker**: Records watering events in Firestore and automatically calculates next due dates.
+- **Botanical Illustrations**: Generates vintage watercolor botanical illustrations using `gemini-3.1-flash-lite-image` and hosts them on Cloud Storage.
+- **Local Weather & Care Advisory**: Fetches real-time temperature and humidity via Open-Meteo API to give actionable advice (e.g. frost protection).
+- **Nursery & Florist Finder**: Connects with Google Maps Geocoding & Places API (New) to locate nearby plant shops and garden centers.
+- **Rich A2UI Display**: Renders responses as rich display cards, tables, and images.
+- **Interactive Chat Frontend**: Web interface featuring a drawer hamburger menu to review recent conversation history.
 
-## Deployment
+---
 
-```bash
-gcloud config set project <your-project-id>
-agents-cli deploy
+## Architecture & Project Structure
+
+```
+my-agent/
+├── app/                       # Core agent implementation
+│   ├── agent.py               # ReAct agent, tools, callbacks, and A2UI schema
+│   ├── a2ui_utils.py          # A2UI callback and message wrapper
+│   └── firestore_service.py   # Firestore CRUD helpers
+├── frontend/                  # Web Chat UI & A2A Proxy
+│   ├── main.py                # FastAPI proxy communicating over A2A JSON-RPC
+│   ├── static/index.html      # Responsive UI with A2UI renderer & history drawer
+│   └── requirements.txt       # Frontend dependencies
+├── seed_firestore.py          # Seed initial plant catalog
+└── pyproject.toml             # Python project dependencies
 ```
 
-To add CI/CD and Terraform, run `agents-cli scaffold enhance`.
-To set up your production infrastructure, run `agents-cli infra cicd`.
+---
 
-## Observability
+## Quick Start (Local Run)
 
-Built-in telemetry exports to Cloud Trace, BigQuery, and Cloud Logging.
+1. **Install dependencies**:
+   ```bash
+   uv sync
+   ```
 
-## A2A Inspector
+2. **Configure environment**:
+   Copy `.env.example` to `.env` and provide your `GOOGLE_MAPS_API_KEY` (and `PROJECT_ID`).
 
-This agent supports the [A2A Protocol](https://a2a-protocol.org/). Use the [A2A Inspector](https://github.com/a2aproject/a2a-inspector) to test interoperability.
-See the [A2A Inspector docs](https://github.com/a2aproject/a2a-inspector) for details.
+3. **Run local agent**:
+   ```bash
+   agents-cli run
+   ```
+
+4. **Run frontend locally**:
+   ```bash
+   cd frontend
+   export AGENT_ENGINE_RESOURCE_NAME="<your-reasoning-engine-resource-name>"
+   export AGENT_DIRECTORY="app"
+   uvicorn main:app --port 8080
+   ```
