@@ -22,7 +22,7 @@
 ### 🌐 線上展示與即時體驗
 
 - **正式服務體驗網址**：[https://plant-companion-frontend-1038784917896.us-central1.run.app](https://plant-companion-frontend-1038784917896.us-central1.run.app)
-- **GitHub 儲存庫**：[https://github.com/KeredStudio/buildwithgemini-my-agent](https://github.com/KeredStudio/buildwithgemini-my-agent)
+- **GitHub 儲存庫**：[https://github.com/KeredStudio/plant-companion-agent](https://github.com/KeredStudio/plant-companion-agent)
 
 ---
 
@@ -196,7 +196,7 @@ Built with **Google ADK (Agent Development Kit)** and **Vertex AI Reasoning Engi
 ### 🌐 Live Service & Links
 
 - **Live Service URL**: [https://plant-companion-frontend-1038784917896.us-central1.run.app](https://plant-companion-frontend-1038784917896.us-central1.run.app)
-- **GitHub Repository**: [https://github.com/KeredStudio/buildwithgemini-my-agent](https://github.com/KeredStudio/buildwithgemini-my-agent)
+- **GitHub Repository**: [https://github.com/KeredStudio/plant-companion-agent](https://github.com/KeredStudio/plant-companion-agent)
 
 ---
 

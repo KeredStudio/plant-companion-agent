@@ -1,7 +1,7 @@
 [project]
-name = "my-agent"
+name = "plant-companion-agent"
 version = "0.1.0"
-description = ""
+description = "Plant Companion - Karina Warm Christmas & Winter Edition Intelligent Botanical Agent"
 authors = [
     {name = "Your Name", email = "your@email.com"},
 ]

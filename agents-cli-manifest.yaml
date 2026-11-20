@@ -1,4 +1,4 @@
-name: "my-agent"
+name: "plant-companion-agent"
 acli_version: "1.4.0"
 agent_directory: "app"
 region: "us-east1"
