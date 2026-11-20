@@ -3,32 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Plant Companion ❄️ aespa Winter Cyber-Frost Edition</title>
+<title>Plant Companion 🎄 Warm Christmas & Winter Edition</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --winter-ice: #00f2fe;
-    --winter-cyan: #4facfe;
-    --winter-frost: #e0f7fa;
-    --winter-purple: #9b51e0;
-    --winter-deep-purple: #170d2b;
-    --winter-bg: #090614;
-    --winter-card-bg: rgba(22, 16, 42, 0.75);
-    --winter-card-border: rgba(79, 172, 254, 0.35);
-    --winter-glow: rgba(0, 242, 254, 0.45);
-    --winter-sparkle: #ff76ac;
-    --winter-text: #f0f6fc;
-    --winter-text-sub: #a5b4fc;
-    --border: rgba(147, 197, 253, 0.22);
+    /* Default: Winter Cyber-Frost Theme */
+    --theme-accent: #00f2fe;
+    --theme-sub: #4facfe;
+    --theme-frost: #e0f7fa;
+    --theme-glow: rgba(0, 242, 254, 0.45);
+    --theme-sparkle: #ff76ac;
+    --theme-bg: #090614;
+    --theme-bg-gradient: radial-gradient(circle at 15% 15%, #180d33 0%, #0a0618 55%, #05030b 100%);
+    --theme-header-bg: linear-gradient(135deg, rgba(20, 12, 38, 0.92) 0%, rgba(13, 24, 48, 0.95) 50%, rgba(26, 12, 45, 0.92) 100%);
+    --theme-card-bg: rgba(22, 16, 42, 0.85);
+    --theme-card-border: rgba(79, 172, 254, 0.35);
+    --theme-user-bubble: linear-gradient(135deg, rgba(155, 81, 224, 0.88) 0%, rgba(214, 51, 132, 0.88) 100%);
+    --theme-user-border: rgba(255, 150, 200, 0.4);
+    --theme-agent-border: #00f2fe;
+    --theme-text: #f0f6fc;
+    --theme-text-sub: #a5b4fc;
+    --theme-title-grad: linear-gradient(135deg, #ffffff 10%, #80d0ff 50%, #e0aaff 100%);
+    --theme-btn-grad: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9b51e0 100%);
+    --theme-avatar-agent: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
     --sidebar-w: 340px;
     --header-height: 58px;
   }
+
+  /* Karina Warm Christmas Theme 🎄✨ */
+  body.theme-karina {
+    --theme-accent: #ffb703;
+    --theme-sub: #fb8500;
+    --theme-frost: #fff3b0;
+    --theme-glow: rgba(255, 183, 3, 0.5);
+    --theme-sparkle: #e63946;
+    --theme-bg: #1c080a;
+    --theme-bg-gradient: radial-gradient(circle at 18% 18%, #2e0c12 0%, #170508 55%, #0d0204 100%);
+    --theme-header-bg: linear-gradient(135deg, rgba(54, 14, 20, 0.95) 0%, rgba(26, 44, 28, 0.95) 55%, rgba(45, 12, 18, 0.95) 100%);
+    --theme-card-bg: rgba(38, 14, 20, 0.88);
+    --theme-card-border: rgba(255, 183, 3, 0.4);
+    --theme-user-bubble: linear-gradient(135deg, rgba(230, 57, 70, 0.9) 0%, rgba(193, 18, 31, 0.9) 100%);
+    --theme-user-border: rgba(255, 183, 3, 0.55);
+    --theme-agent-border: #ffb703;
+    --theme-text: #fffdf7;
+    --theme-text-sub: #f3c68f;
+    --theme-title-grad: linear-gradient(135deg, #ffffff 10%, #ffe066 50%, #ff758f 100%);
+    --theme-btn-grad: linear-gradient(135deg, #d90429 0%, #ef233c 50%, #ffb703 100%);
+    --theme-avatar-agent: linear-gradient(135deg, #2b9348 0%, #007f5f 60%, #1b4332 100%);
+  }
+
   * { box-sizing: border-box; }
   html {
     width: 100%;
     height: 100%;
-    background: var(--winter-bg);
+    background: var(--theme-bg);
   }
   body {
     margin: 0;
@@ -42,13 +71,14 @@
     bottom: 0;
     overflow: hidden;
     font-family: 'Outfit', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
-    background: radial-gradient(circle at 15% 15%, #180d33 0%, #0a0618 55%, #05030b 100%);
-    color: var(--winter-text);
+    background: var(--theme-bg-gradient);
+    color: var(--theme-text);
     display: flex;
     flex-direction: column;
+    transition: background 0.4s ease, color 0.4s ease;
   }
 
-  /* Falling Snowflakes Canvas */
+  /* Interactive Canvas (Snow / Warm Christmas Embers) */
   #snowCanvas {
     position: fixed;
     top: 0;
@@ -59,9 +89,9 @@
     z-index: 1;
   }
 
-  /* Severe Cold Frost Alert Banner (Phase 4) */
+  /* Severe Cold Frost Alert Banner */
   .frost-alert-banner {
-    background: linear-gradient(90deg, rgba(255, 71, 87, 0.9) 0%, rgba(155, 81, 224, 0.9) 100%);
+    background: linear-gradient(90deg, rgba(230, 57, 70, 0.95) 0%, rgba(155, 81, 224, 0.92) 100%);
     color: #fff;
     padding: .45rem 1rem;
     font-size: .8rem;
@@ -72,16 +102,16 @@
     z-index: 45;
     flex-shrink: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 2px 10px rgba(255, 71, 87, 0.3);
+    box-shadow: 0 2px 10px rgba(230, 57, 70, 0.35);
   }
   .frost-alert-banner span { display: flex; align-items: center; gap: .35rem; }
   .alert-close { background: none; border: none; color: #fff; cursor: pointer; font-size: 1rem; }
 
-  /* Header - aespa Winter Futuristic Ice-Glass */
+  /* Header */
   header {
-    background: linear-gradient(135deg, rgba(20, 12, 38, 0.9) 0%, rgba(13, 24, 48, 0.95) 50%, rgba(26, 12, 45, 0.9) 100%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--theme-header-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     color: #fff;
     padding: 0.75rem 1rem;
     padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
@@ -89,12 +119,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15), 0 1px 0 rgba(0, 242, 254, 0.35);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 1px 0 var(--theme-card-border);
     z-index: 50;
-    border-bottom: 1.5px solid rgba(0, 242, 254, 0.3);
+    border-bottom: 1.5px solid var(--theme-card-border);
     flex-shrink: 0;
     width: 100%;
     position: relative;
+    transition: all 0.4s ease;
   }
   .header-left {
     display: flex;
@@ -102,10 +133,10 @@
     gap: .65rem;
     min-width: 0;
   }
-  .hamburger-btn, .header-icon-btn {
-    background: rgba(0, 242, 254, 0.08);
-    border: 1px solid rgba(0, 242, 254, 0.35);
-    color: var(--winter-ice);
+  .hamburger-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-accent);
     cursor: pointer;
     padding: 6px;
     border-radius: 9px;
@@ -114,16 +145,16 @@
     justify-content: center;
     flex-shrink: 0;
     transition: all 0.25s ease;
-    box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
-  .hamburger-btn:active, .hamburger-btn:hover, .header-icon-btn:hover {
-    background: rgba(0, 242, 254, 0.2);
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+  .hamburger-btn:active, .hamburger-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 15px var(--theme-glow);
     transform: scale(1.05);
   }
-  .hamburger-btn span, .header-icon-btn span { font-size: 1.4rem; color: var(--winter-ice); display: block; }
+  .hamburger-btn span { font-size: 1.4rem; color: var(--theme-accent); display: block; }
   .header-title {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 800;
     display: flex;
     align-items: center;
@@ -132,22 +163,47 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    background: linear-gradient(135deg, #ffffff 10%, #80d0ff 50%, #e0aaff 100%);
+    background: var(--theme-title-grad);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+    text-shadow: 0 0 25px var(--theme-glow);
   }
 
   /* Header Right Controls */
   .header-right {
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: .45rem;
+  }
+  .theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.2px solid var(--theme-accent);
+    color: var(--theme-frost);
+    padding: 5px 9px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: .74rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px var(--theme-glow);
+    user-select: none;
+  }
+  .theme-toggle-btn:hover {
+    transform: translateY(-1px) scale(1.04);
+  }
+  body.theme-karina .theme-toggle-btn {
+    background: linear-gradient(135deg, #d90429 0%, #ffb703 100%);
+    color: #fff;
+    border-color: #ffd166;
+    box-shadow: 0 0 16px rgba(255, 183, 3, 0.6);
   }
   .persona-toggle-btn {
-    background: rgba(0, 242, 254, 0.08);
-    border: 1px solid rgba(0, 242, 254, 0.35);
-    color: var(--winter-frost);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-frost);
     padding: 5px 8px;
     border-radius: 16px;
     cursor: pointer;
@@ -165,8 +221,8 @@
     box-shadow: 0 0 12px rgba(255, 118, 172, 0.5);
   }
   .bgm-btn {
-    background: rgba(155, 81, 224, 0.2);
-    border: 1px solid rgba(0, 242, 254, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--theme-card-border);
     color: #fff;
     padding: 5px 9px;
     border-radius: 20px;
@@ -179,12 +235,12 @@
     letter-spacing: 0.3px;
     transition: all 0.25s;
     user-select: none;
-    box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+    box-shadow: 0 0 12px var(--theme-glow);
   }
   .bgm-btn.playing {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.35) 0%, rgba(155, 81, 224, 0.45) 100%);
-    border-color: var(--winter-ice);
-    box-shadow: 0 0 16px rgba(0, 242, 254, 0.5);
+    background: var(--theme-btn-grad);
+    border-color: var(--theme-accent);
+    box-shadow: 0 0 16px var(--theme-glow);
   }
   .bgm-wave {
     display: inline-flex;
@@ -195,7 +251,7 @@
   .bgm-wave span {
     width: 2.5px;
     height: 100%;
-    background: var(--winter-ice);
+    background: var(--theme-accent);
     border-radius: 1px;
     animation: waveAnim 1s infinite ease-in-out alternate;
   }
@@ -228,27 +284,27 @@
     bottom: 0;
     width: var(--sidebar-w);
     max-width: 88vw;
-    background: rgba(14, 10, 28, 0.95);
+    background: var(--theme-bg);
     backdrop-filter: blur(16px);
-    box-shadow: 6px 0 30px rgba(0, 242, 254, 0.2);
+    box-shadow: 6px 0 30px rgba(0, 0, 0, 0.5);
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     z-index: 70;
-    border-right: 1.5px solid rgba(0, 242, 254, 0.35);
+    border-right: 1.5px solid var(--theme-card-border);
   }
   .sidebar.open {
     transform: translateX(0);
   }
   .sidebar-header {
-    background: linear-gradient(135deg, rgba(23, 13, 43, 0.95) 0%, rgba(10, 20, 42, 0.95) 100%);
+    background: var(--theme-header-bg);
     color: #fff;
     padding: calc(0.9rem + env(safe-area-inset-top, 0px)) 1rem 0.9rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(0, 242, 254, 0.25);
+    border-bottom: 1px solid var(--theme-card-border);
   }
   .sidebar-header h2 {
     margin: 0;
@@ -256,7 +312,7 @@
     display: flex;
     align-items: center;
     gap: .5rem;
-    color: var(--winter-ice);
+    color: var(--theme-accent);
   }
   .close-btn {
     background: transparent;
@@ -267,20 +323,20 @@
     border-radius: 6px;
     display: flex;
   }
-  .close-btn:hover { background: rgba(0, 242, 254, 0.15); color: var(--winter-ice); }
+  .close-btn:hover { background: rgba(255, 255, 255, 0.15); color: var(--theme-accent); }
 
   /* Sidebar Tabs */
   .sidebar-tabs {
     display: flex;
-    border-bottom: 1px solid rgba(0, 242, 254, 0.2);
-    background: rgba(10, 6, 22, 0.85);
+    border-bottom: 1px solid var(--theme-card-border);
+    background: rgba(0, 0, 0, 0.3);
   }
   .tab-btn {
     flex: 1;
     padding: .7rem;
     background: transparent;
     border: none;
-    color: var(--winter-text-sub);
+    color: var(--theme-text-sub);
     font-size: .85rem;
     font-weight: 600;
     cursor: pointer;
@@ -292,9 +348,9 @@
     border-bottom: 2px solid transparent;
   }
   .tab-btn.active {
-    color: var(--winter-ice);
-    border-bottom-color: var(--winter-ice);
-    background: rgba(0, 242, 254, 0.08);
+    color: var(--theme-accent);
+    border-bottom-color: var(--theme-accent);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .sidebar-content {
@@ -308,30 +364,29 @@
     -webkit-overflow-scrolling: touch;
   }
   .history-empty, .garden-empty {
-    color: var(--winter-text-sub);
+    color: var(--theme-text-sub);
     font-size: .88rem;
     text-align: center;
     margin-top: 1.5rem;
     line-height: 1.6;
   }
   .history-item {
-    border: 1px solid rgba(0, 242, 254, 0.2);
+    border: 1px solid var(--theme-card-border);
     border-radius: 12px;
     padding: .85rem;
-    background: rgba(22, 16, 42, 0.6);
+    background: var(--theme-card-bg);
     transition: all 0.25s ease;
-    border-left: 3px solid var(--winter-cyan);
+    border-left: 3px solid var(--theme-sub);
     cursor: pointer;
   }
   .history-item:hover {
-    border-color: var(--winter-ice);
-    background: rgba(30, 20, 60, 0.8);
-    border-left: 3px solid var(--winter-ice);
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    border-color: var(--theme-accent);
+    border-left: 3px solid var(--theme-accent);
+    box-shadow: 0 0 15px var(--theme-glow);
   }
   .history-time {
     font-size: .72rem;
-    color: var(--winter-text-sub);
+    color: var(--theme-text-sub);
     margin-bottom: .3rem;
     display: flex;
     align-items: center;
@@ -346,7 +401,7 @@
   }
   .history-agent-preview {
     font-size: .8rem;
-    color: #b0c0e0;
+    color: var(--theme-frost);
     line-height: 1.35;
     overflow: hidden;
     display: -webkit-box;
@@ -357,8 +412,8 @@
 
   /* My Garden Cards */
   .garden-card {
-    background: linear-gradient(135deg, rgba(23, 16, 45, 0.8) 0%, rgba(13, 26, 52, 0.8) 100%);
-    border: 1px solid rgba(0, 242, 254, 0.3);
+    background: var(--theme-card-bg);
+    border: 1px solid var(--theme-card-border);
     border-radius: 12px;
     padding: .85rem;
     display: flex;
@@ -379,29 +434,32 @@
     font-size: .7rem;
     padding: 2px 7px;
     border-radius: 10px;
-    background: rgba(0, 242, 254, 0.15);
-    border: 1px solid rgba(0, 242, 254, 0.4);
-    color: var(--winter-ice);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-accent);
   }
   .garden-meta {
     font-size: .78rem;
-    color: #b0c0e0;
+    color: var(--theme-frost);
     display: flex;
     justify-content: space-between;
   }
   .water-btn {
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    background: var(--theme-btn-grad);
     color: #000;
     border: none;
     border-radius: 8px;
     padding: .35rem .7rem;
     font-size: .78rem;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: .25rem;
     margin-top: .3rem;
+  }
+  body.theme-karina .water-btn {
+    color: #fff;
   }
 
   /* Badges Section in Drawer */
@@ -412,8 +470,8 @@
     margin-top: .5rem;
   }
   .badge-item {
-    background: rgba(22, 16, 42, 0.7);
-    border: 1px solid rgba(0, 242, 254, 0.25);
+    background: var(--theme-card-bg);
+    border: 1px solid var(--theme-card-border);
     border-radius: 10px;
     padding: .65rem;
     text-align: center;
@@ -429,21 +487,21 @@
   }
   .badge-desc {
     font-size: .68rem;
-    color: var(--winter-text-sub);
+    color: var(--theme-text-sub);
   }
 
   .sidebar-footer {
     padding: calc(0.7rem + env(safe-area-inset-bottom, 0px)) 1rem 0.7rem 1rem;
-    border-top: 1px solid rgba(0, 242, 254, 0.2);
+    border-top: 1px solid var(--theme-card-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10, 6, 20, 0.9);
+    background: rgba(0, 0, 0, 0.4);
   }
   .clear-btn {
-    background: rgba(255, 118, 172, 0.15);
+    background: rgba(230, 57, 70, 0.2);
     color: #ff85b3;
-    border: 1px solid rgba(255, 118, 172, 0.4);
+    border: 1px solid rgba(230, 57, 70, 0.45);
     border-radius: 8px;
     padding: .4rem .75rem;
     font-size: .8rem;
@@ -490,19 +548,23 @@
     justify-content: center;
     font-size: 1.25rem;
     flex-shrink: 0;
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
+    box-shadow: 0 0 15px var(--theme-glow);
     border: 1.5px solid rgba(255, 255, 255, 0.7);
     user-select: none;
   }
   .avatar.agent {
-    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-    box-shadow: 0 0 18px rgba(0, 242, 254, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.4);
-    border: 1.5px solid var(--winter-ice);
+    background: var(--theme-avatar-agent);
+    box-shadow: 0 0 18px var(--theme-glow), inset 0 0 8px rgba(255, 255, 255, 0.4);
+    border: 1.5px solid var(--theme-agent-border);
   }
   .avatar.user {
     background: linear-gradient(135deg, #4b1248 0%, #f0c27b 100%);
     box-shadow: 0 0 18px rgba(255, 118, 172, 0.5);
     border: 1.5px solid #ff9ebb;
+  }
+  body.theme-karina .avatar.user {
+    background: linear-gradient(135deg, #9d0208 0%, #faa307 100%);
+    border-color: #ffd166;
   }
 
   .msg-col {
@@ -520,7 +582,7 @@
 
   .sender-meta {
     font-size: .75rem;
-    color: var(--winter-text-sub);
+    color: var(--theme-text-sub);
     margin-bottom: .3rem;
     display: flex;
     align-items: center;
@@ -532,21 +594,25 @@
     font-weight: 700;
   }
   .chat-row.agent .sender-name {
-    color: var(--winter-ice);
-    text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+    color: var(--theme-accent);
+    text-shadow: 0 0 10px var(--theme-glow);
   }
   .chat-row.user .sender-name {
     color: #ff9ebb;
     text-shadow: 0 0 10px rgba(255, 118, 172, 0.4);
+  }
+  body.theme-karina .chat-row.user .sender-name {
+    color: #ffd166;
+    text-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
   }
 
   .bubble {
     display: inline-block;
     padding: .85rem 1.15rem;
     border-radius: 16px;
-    background: rgba(22, 16, 42, 0.85);
+    background: var(--theme-card-bg);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 242, 254, 0.25);
+    border: 1px solid var(--theme-card-border);
     text-align: left;
     max-width: 100%;
     word-break: break-word;
@@ -555,19 +621,19 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     line-height: 1.55;
     font-size: .96rem;
-    color: var(--winter-text);
+    color: var(--theme-text);
   }
   .chat-row.user .bubble {
-    background: linear-gradient(135deg, rgba(155, 81, 224, 0.85) 0%, rgba(214, 51, 132, 0.85) 100%);
+    background: var(--theme-user-bubble);
     color: #fff;
-    border: 1px solid rgba(255, 150, 200, 0.4);
+    border: 1px solid var(--theme-user-border);
     border-top-right-radius: 4px;
-    box-shadow: 0 4px 20px rgba(214, 51, 132, 0.35);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
   .chat-row.agent .bubble {
     border-top-left-radius: 4px;
-    border-left: 3px solid var(--winter-ice);
-    box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
+    border-left: 3.5px solid var(--theme-agent-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   }
   .bubble.rich {
     background: transparent;
@@ -580,22 +646,22 @@
 
   .msg-time {
     font-size: .68rem;
-    color: #7b88a8;
+    color: #8b9bb4;
     margin-top: .3rem;
     padding: 0 .4rem;
   }
 
-  /* Polar Postcard Component (Phase 3) */
+  /* Polar Postcard Component */
   .polaroid-postcard {
     background: #ffffff;
     border-radius: 8px;
     padding: 12px 12px 18px 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(0, 242, 254, 0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--theme-glow);
     color: #1a1a1a;
     display: inline-block;
     max-width: 320px;
     margin: .5rem 0;
-    border: 1px solid rgba(0, 242, 254, 0.3);
+    border: 1px solid var(--theme-card-border);
   }
   .polaroid-img {
     width: 100%;
@@ -622,26 +688,27 @@
     margin-top: 8px;
     width: 100%;
     padding: 6px;
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    background: var(--theme-btn-grad);
     border: none;
     border-radius: 6px;
     color: #000;
-    font-weight: 700;
+    font-weight: 800;
     font-size: .78rem;
     cursor: pointer;
   }
+  body.theme-karina .polaroid-dl-btn { color: #fff; }
 
   /* Welcome Card */
   .welcome-card {
-    background: linear-gradient(145deg, rgba(23, 14, 45, 0.9) 0%, rgba(13, 26, 52, 0.9) 100%);
+    background: var(--theme-card-bg);
     backdrop-filter: blur(14px);
-    border: 1px solid rgba(0, 242, 254, 0.4);
-    border-top: 3px solid var(--winter-ice);
+    border: 1px solid var(--theme-card-border);
+    border-top: 3.5px solid var(--theme-accent);
     border-radius: 16px;
     padding: 1.25rem 1.35rem;
-    box-shadow: 0 8px 32px rgba(0, 242, 254, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     line-height: 1.6;
-    color: #f0f6fc;
+    color: var(--theme-text);
     width: 100%;
     max-width: 100%;
     word-break: break-word;
@@ -657,41 +724,41 @@
     align-items: center;
     gap: .45rem;
     flex-wrap: wrap;
-    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 50%, #e0aaff 100%);
+    background: var(--theme-title-grad);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    text-shadow: 0 0 20px var(--theme-glow);
   }
   .welcome-desc {
     font-size: .92rem;
     margin-bottom: .85rem;
-    color: #d1dcfa;
+    color: var(--theme-frost);
     line-height: 1.6;
   }
   .welcome-feature-list {
     margin: 0 0 .95rem 0;
     padding-left: 1.25rem;
     font-size: .88rem;
-    color: #c0d0f5;
+    color: var(--theme-text-sub);
   }
   .welcome-feature-list li {
     margin-bottom: .4rem;
   }
   .welcome-feature-list strong {
-    color: var(--winter-ice);
+    color: var(--theme-accent);
   }
   .suggestion-chips {
     display: flex;
     flex-wrap: wrap;
     gap: .5rem;
     margin-top: .85rem;
-    border-top: 1px dashed rgba(0, 242, 254, 0.3);
+    border-top: 1px dashed var(--theme-card-border);
     padding-top: .85rem;
   }
   .chip {
-    background: rgba(0, 242, 254, 0.08);
-    border: 1px solid rgba(0, 242, 254, 0.35);
-    color: var(--winter-frost);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-frost);
     padding: .4rem .8rem;
     border-radius: 20px;
     font-size: .82rem;
@@ -708,21 +775,21 @@
     backdrop-filter: blur(8px);
   }
   .chip:active, .chip:hover {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.3) 0%, rgba(155, 81, 224, 0.4) 100%);
+    background: var(--theme-btn-grad);
     color: #ffffff;
-    border-color: var(--winter-ice);
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    border-color: var(--theme-accent);
+    box-shadow: 0 0 15px var(--theme-glow);
     transform: translateY(-1px);
   }
 
-  /* Form & Input - Docked securely to bottom with Mic Voice Input & Quick Attachment */
+  /* Form & Input - Docked securely to bottom */
   form {
     display: flex;
     gap: .55rem;
     padding: .85rem 1rem;
     padding-bottom: calc(0.85rem + env(safe-area-inset-bottom, 0px));
-    border-top: 1px solid rgba(0, 242, 254, 0.25);
-    background: rgba(14, 10, 28, 0.92);
+    border-top: 1px solid var(--theme-card-border);
+    background: var(--theme-header-bg);
     backdrop-filter: blur(15px);
     max-width: 880px;
     width: 100%;
@@ -736,28 +803,28 @@
   input {
     flex: 1;
     padding: .8rem 1.05rem;
-    border: 1.5px solid rgba(0, 242, 254, 0.3);
+    border: 1.5px solid var(--theme-card-border);
     border-radius: 12px;
     font-size: 16px;
     outline: none;
-    background: rgba(22, 16, 42, 0.85);
+    background: var(--theme-card-bg);
     color: #fff;
     transition: all 0.25s ease;
     min-width: 0;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
   }
   input::placeholder {
-    color: #7d8ba8;
+    color: var(--theme-text-sub);
+    opacity: 0.75;
   }
   input:focus {
-    border-color: var(--winter-ice);
-    background: rgba(30, 22, 58, 0.95);
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
+    border-color: var(--theme-accent);
+    box-shadow: 0 0 15px var(--theme-glow);
   }
   .mic-btn, .photo-btn {
-    background: rgba(0, 242, 254, 0.1);
-    border: 1.5px solid rgba(0, 242, 254, 0.4);
-    color: var(--winter-ice);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid var(--theme-card-border);
+    color: var(--theme-accent);
     border-radius: 12px;
     width: 44px;
     height: 44px;
@@ -783,7 +850,7 @@
     padding: .8rem 1.35rem;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9b51e0 100%);
+    background: var(--theme-btn-grad);
     color: #fff;
     font-weight: 800;
     cursor: pointer;
@@ -791,48 +858,51 @@
     display: flex;
     align-items: center;
     gap: .35rem;
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    box-shadow: 0 0 20px var(--theme-glow);
     flex-shrink: 0;
     font-size: .95rem;
     letter-spacing: 0.5px;
   }
+  body:not(.theme-karina) button.send-btn { color: #fff; }
+  body.theme-karina button.send-btn { color: #fff; }
   button.send-btn:active {
     transform: scale(0.97);
   }
 
   /* A2UI components */
   .a2card {
-    border: 1px solid rgba(0, 242, 254, 0.35);
+    border: 1px solid var(--theme-card-border);
     border-radius: 14px;
     padding: 1.05rem;
-    background: rgba(20, 14, 40, 0.85);
+    background: var(--theme-card-bg);
     backdrop-filter: blur(12px);
-    box-shadow: 0 6px 25px rgba(0, 242, 254, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     width: 100%;
     max-width: 100%;
-    border-top: 3px solid var(--winter-ice);
+    border-top: 3px solid var(--theme-accent);
     word-break: break-word;
     overflow-wrap: anywhere;
-    color: #f0f6fc;
+    color: var(--theme-text);
   }
   .a2card + .a2card, .a2col > .a2card { margin-top: .65rem; }
   .a2col { display: flex; flex-direction: column; gap: .5rem; width: 100%; max-width: 100%; }
   .a2row { display: flex; flex-direction: row; gap: .55rem; align-items: center; flex-wrap: wrap; width: 100%; max-width: 100%; }
   .a2row.between { justify-content: space-between; }
-  .a2text { margin: 0; line-height: 1.5; word-break: break-word; color: #e2e8f0; }
-  .a2text.a2-h1 { font-size: 1.35rem; font-weight: 800; color: #ffffff; text-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
-  .a2text.a2-h2 { font-size: 1.18rem; font-weight: 700; color: var(--winter-ice); border-bottom: 1px solid rgba(0, 242, 254, 0.25); padding-bottom: .3rem; }
-  .a2text.a2-h3 { font-size: 1.05rem; font-weight: 700; color: #ff9ebb; }
-  .a2text.a2-h4 { font-size: .98rem; font-weight: 600; color: var(--winter-frost); }
-  .a2text.a2-caption { font-size: .82rem; color: #9aa9cc; }
-  .a2divider { border: none; border-top: 1px dashed rgba(0, 242, 254, 0.25); margin: .45rem 0; width: 100%; }
-  .a2img { max-width: 100%; height: auto; border-radius: 10px; display: block; box-shadow: 0 0 25px rgba(0, 242, 254, 0.3); border: 1.5px solid rgba(0, 242, 254, 0.5); }
-  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.25rem; line-height: 1; vertical-align: middle; color: var(--winter-ice); }
+  .a2text { margin: 0; line-height: 1.5; word-break: break-word; color: #f0f4fc; }
+  .a2text.a2-h1 { font-size: 1.35rem; font-weight: 800; color: #ffffff; text-shadow: 0 0 15px var(--theme-glow); }
+  .a2text.a2-h2 { font-size: 1.18rem; font-weight: 700; color: var(--theme-accent); border-bottom: 1px solid var(--theme-card-border); padding-bottom: .3rem; }
+  .a2text.a2-h3 { font-size: 1.05rem; font-weight: 700; color: var(--theme-frost); }
+  .a2text.a2-h4 { font-size: .98rem; font-weight: 600; color: var(--theme-frost); }
+  .a2text.a2-caption { font-size: .82rem; color: var(--theme-text-sub); }
+  .a2divider { border: none; border-top: 1px dashed var(--theme-card-border); margin: .45rem 0; width: 100%; }
+  .a2img { max-width: 100%; height: auto; border-radius: 10px; display: block; box-shadow: 0 0 25px var(--theme-glow); border: 1.5px solid var(--theme-card-border); }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.25rem; line-height: 1; vertical-align: middle; color: var(--theme-accent); }
 
   /* Responsive Mobile Overrides */
   @media (max-width: 600px) {
     header { padding-left: .75rem; padding-right: .75rem; padding-top: calc(0.6rem + env(safe-area-inset-top, 0px)); padding-bottom: 0.6rem; }
-    .header-title { font-size: .95rem; }
+    .header-title { font-size: .92rem; }
+    .theme-toggle-btn { font-size: .68rem; padding: 4px 7px; }
     .persona-toggle-btn { font-size: .65rem; padding: 3px 6px; }
     .bgm-btn { font-size: .68rem; padding: 4px 6px; }
     #log { padding: .75rem .75rem .4rem .75rem; }
@@ -854,13 +924,13 @@
 </head>
 <body>
 
-<!-- Interactive Snowfall Canvas -->
+<!-- Interactive Snowfall / Warm Ember Canvas -->
 <canvas id="snowCanvas"></canvas>
 
 <!-- Audio Element for Lyria Lo-Fi -->
 <audio id="bgmAudio" src="/winter_lofi.mp3" loop preload="auto"></audio>
 
-<!-- Cold Weather Warning Alert Banner (Phase 4) -->
+<!-- Cold Weather Warning Alert Banner -->
 <div id="frostAlert" class="frost-alert-banner">
   <span><span class="material-symbols-outlined" style="font-size:1.1rem;color:#fff;">ac_unit</span> ❄️ 極寒低溫預警：氣溫偏低，熱帶雨林植物（龜背竹、蔓綠絨）請移至離窗戶 1 公尺溫暖處避寒！</span>
   <button class="alert-close" onclick="document.getElementById('frostAlert').style.display='none'">✕</button>
@@ -871,19 +941,24 @@
     <button id="menuBtn" class="hamburger-btn" aria-label="選單" title="花園與記憶">
       <span class="material-symbols-outlined">menu</span>
     </button>
-    <div class="header-title">
-      <span>❄️</span>
-      <span>PLANT COMPANION</span>
-      <span>🦋</span>
+    <div class="header-title" id="headerTitle">
+      <span id="headerIcon1">❄️</span>
+      <span id="headerBrand">PLANT COMPANION</span>
+      <span id="headerIcon2">🦋</span>
     </div>
   </div>
   <div class="header-right">
+    <!-- Theme Switcher: Winter (Cyber-Frost) <-> Karina (Warm Christmas) -->
+    <button id="themeToggleBtn" class="theme-toggle-btn" title="切換主題風格：Winter 冰霜 / Karina 溫暖聖誕">
+      <span class="material-symbols-outlined" style="font-size:.95rem;" id="themeToggleIcon">palette</span>
+      <span id="themeToggleLabel">Karina 聖誕</span>
+    </button>
     <button id="personaBtn" class="persona-toggle-btn" title="切換自述模式 (植物第一人稱撒嬌互動)">
       <span class="material-symbols-outlined" style="font-size:.95rem;">sentiment_satisfied</span>
       <span id="personaLabel">擬人化</span>
     </button>
     <button id="bgmBtn" class="bgm-btn" title="播放 / 暫停 Lyria Lo-Fi 音樂">
-      <span class="material-symbols-outlined" style="font-size:1.1rem;color:var(--winter-ice);" id="bgmIcon">music_note</span>
+      <span class="material-symbols-outlined" style="font-size:1.1rem;color:var(--theme-accent);" id="bgmIcon">music_note</span>
       <span>BGM</span>
       <div class="bgm-wave" id="bgmWave" style="display:none;">
         <span></span><span></span><span></span>
@@ -896,7 +971,7 @@
 
 <aside id="sidebar" class="sidebar">
   <div class="sidebar-header">
-    <h2><span class="material-symbols-outlined" style="color:var(--winter-ice);">spa</span> 曠野綠植儀表板</h2>
+    <h2><span class="material-symbols-outlined" style="color:var(--theme-accent);">spa</span> 曠野綠植儀表板</h2>
     <button id="closeBtn" class="close-btn" aria-label="關閉">
       <span class="material-symbols-outlined" style="color:#fff;">close</span>
     </button>
@@ -945,9 +1020,9 @@
         <div class="badge-desc">完成居家窗台採光評估</div>
       </div>
       <div class="badge-item">
-        <div class="badge-icon">🦋</div>
-        <div class="badge-title">MY 綠植大師</div>
-        <div class="badge-desc">與 Winter 達成深層心靈連結</div>
+        <div class="badge-icon">🎄</div>
+        <div class="badge-title">Karina 溫暖同行</div>
+        <div class="badge-desc">點亮聖誕溫暖熱紅酒氛圍</div>
       </div>
     </div>
   </div>
@@ -970,14 +1045,51 @@
   <input id="input" placeholder="詢問病害診斷、換盆介質配比、施肥日程、採光方位或召喚插畫…" autocomplete="off" autofocus>
   <button class="send-btn">
     <span>傳送</span>
-    <span style="font-size: .95rem;">❄️</span>
+    <span id="sendBtnIcon" style="font-size: .95rem;">❄️</span>
   </button>
 </form>
 
 <input type="file" id="filePicker" accept="image/*" style="display:none;">
 
 <script>
-// 1. Particle Canvas (Snow & Cyber Dust)
+// 1. Theme State (Winter vs Karina Warm Christmas)
+let currentTheme = localStorage.getItem("plant_companion_theme") || "karina"; // Default to Karina as requested!
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+const themeToggleLabel = document.getElementById("themeToggleLabel");
+const themeToggleIcon = document.getElementById("themeToggleIcon");
+const headerIcon1 = document.getElementById("headerIcon1");
+const headerIcon2 = document.getElementById("headerIcon2");
+const headerBrand = document.getElementById("headerBrand");
+const sendBtnIcon = document.getElementById("sendBtnIcon");
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  localStorage.setItem("plant_companion_theme", theme);
+  if (theme === "karina") {
+    document.body.classList.add("theme-karina");
+    themeToggleLabel.textContent = "Karina 溫暖聖誕";
+    themeToggleIcon.textContent = "celebration";
+    headerIcon1.textContent = "🎄";
+    headerIcon2.textContent = "✨";
+    headerBrand.textContent = "PLANT COMPANION";
+    sendBtnIcon.textContent = "🎁";
+  } else {
+    document.body.classList.remove("theme-karina");
+    themeToggleLabel.textContent = "Winter 冰霜";
+    themeToggleIcon.textContent = "ac_unit";
+    headerIcon1.textContent = "❄️";
+    headerIcon2.textContent = "🦋";
+    headerBrand.textContent = "PLANT COMPANION";
+    sendBtnIcon.textContent = "❄️";
+  }
+}
+applyTheme(currentTheme);
+
+themeToggleBtn.addEventListener("click", () => {
+  applyTheme(currentTheme === "karina" ? "winter" : "karina");
+});
+
+// 2. Particle Canvas (Adaptive: Golden Warm Embers for Karina / Cool Snow for Winter)
 const canvas = document.getElementById("snowCanvas");
 const ctx = canvas.getContext("2d");
 let width, height;
@@ -989,32 +1101,45 @@ resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 const particles = [];
-const particleCount = 45;
+const particleCount = 48;
 for (let i = 0; i < particleCount; i++) {
   particles.push({
     x: Math.random() * width,
     y: Math.random() * height,
-    radius: Math.random() * 2.2 + 0.8,
+    radius: Math.random() * 2.4 + 0.8,
     speedY: Math.random() * 0.9 + 0.3,
-    speedX: Math.sin(i) * 0.4,
-    opacity: Math.random() * 0.65 + 0.25,
-    glow: Math.random() > 0.5
+    speedX: Math.sin(i) * 0.45,
+    opacity: Math.random() * 0.7 + 0.2,
+    glow: Math.random() > 0.4
   });
 }
 
 function renderSnow() {
   ctx.clearRect(0, 0, width, height);
+  const isKarina = currentTheme === "karina";
   for (let p of particles) {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    if (p.glow) {
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = "#00f2fe";
-      ctx.fillStyle = `rgba(0, 242, 254, ${p.opacity})`;
+    if (isKarina) {
+      if (p.glow) {
+        ctx.shadowBlur = 9;
+        ctx.shadowColor = "#ffb703";
+        ctx.fillStyle = `rgba(255, 183, 3, ${p.opacity})`;
+      } else {
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = "#e63946";
+        ctx.fillStyle = `rgba(255, 225, 168, ${p.opacity})`;
+      }
     } else {
-      ctx.shadowBlur = 4;
-      ctx.shadowColor = "#e0aaff";
-      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+      if (p.glow) {
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = "#00f2fe";
+        ctx.fillStyle = `rgba(0, 242, 254, ${p.opacity})`;
+      } else {
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = "#e0aaff";
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+      }
     }
     ctx.fill();
     p.y += p.speedY;
@@ -1028,7 +1153,7 @@ function renderSnow() {
 }
 requestAnimationFrame(renderSnow);
 
-// 2. Audio BGM Player
+// 3. Audio BGM Player
 const bgmAudio = document.getElementById("bgmAudio");
 const bgmBtn = document.getElementById("bgmBtn");
 const bgmWave = document.getElementById("bgmWave");
@@ -1052,7 +1177,7 @@ bgmBtn.addEventListener("click", () => {
   }
 });
 
-// 3. Talking Plant Persona Mode (Phase 3)
+// 4. Talking Plant Persona Mode
 let talkingPlantMode = false;
 const personaBtn = document.getElementById("personaBtn");
 const personaLabel = document.getElementById("personaLabel");
@@ -1066,11 +1191,12 @@ personaBtn.addEventListener("click", () => {
   } else {
     personaBtn.classList.remove("active");
     personaLabel.textContent = "擬人化";
-    sendMessage("請切換回 Winter 專家植物顧問模式。");
+    const modeName = currentTheme === "karina" ? "Karina 溫暖聖誕顧問" : "Winter 專家植物顧問";
+    sendMessage(`請切換回 ${modeName} 模式。`);
   }
 });
 
-// 4. Photo Picker for Plant Doctor (Phase 2 & 3)
+// 5. Photo Picker for Plant Doctor
 const photoBtn = document.getElementById("photoBtn");
 const filePicker = document.getElementById("filePicker");
 
@@ -1082,7 +1208,7 @@ filePicker.addEventListener("change", (e) => {
   }
 });
 
-// 5. Web Speech API (Voice Input)
+// 6. Web Speech API (Voice Input)
 const micBtn = document.getElementById("micBtn");
 const input = document.getElementById("input");
 let recognition = null;
@@ -1129,7 +1255,7 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   micBtn.style.display = "none";
 }
 
-// 6. Chat & Drawer
+// 7. Chat & Drawer
 const log = document.getElementById("log");
 const form = document.getElementById("form");
 const menuBtn = document.getElementById("menuBtn");
@@ -1202,10 +1328,10 @@ function renderGarden() {
       </div>
       <div class="garden-meta">
         <span>上次澆水: ${p.lastWatered}</span>
-        <span style="color:var(--winter-ice); font-weight:600;">下次: ${p.nextDue}</span>
+        <span style="color:var(--theme-accent); font-weight:700;">下次: ${p.nextDue}</span>
       </div>
       <button class="water-btn" onclick="quickWater(${idx})">
-        <span class="material-symbols-outlined" style="font-size:.9rem;">water_drop</span> 今日已澆水
+        <span class="material-symbols-outlined" style="font-size:.9rem; color:inherit;">water_drop</span> 今日已澆水
       </button>
     `;
     gardenList.appendChild(card);
@@ -1228,14 +1354,14 @@ function renderHistorySidebar() {
   const history = loadHistory();
   historyList.innerHTML = "";
   if (!history.length) {
-    historyList.innerHTML = '<div class="history-empty">尚無對話記錄。<br>與 Winter 綠植夥伴交談後即可在此調閱回顧！</div>';
+    historyList.innerHTML = '<div class="history-empty">尚無對話記錄。<br>與綠植夥伴交談後即可在此調閱回顧！</div>';
     return;
   }
   for (let i = history.length - 1; i >= 0; i--) {
     const item = history[i];
     const div = el("div", "history-item");
     const time = el("div", "history-time");
-    time.innerHTML = `<span class="material-symbols-outlined" style="font-size:.85rem;color:var(--winter-ice);">schedule</span> ${item.time || ""}`;
+    time.innerHTML = `<span class="material-symbols-outlined" style="font-size:.85rem;color:var(--theme-accent);">schedule</span> ${item.time || ""}`;
     div.appendChild(time);
     div.appendChild(el("div", "history-user", item.userText));
     div.appendChild(el("div", "history-agent-preview", item.agentPreview || "(回傳卡片或圖形元件)"));
@@ -1279,13 +1405,22 @@ function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.
 function bubble(who) {
   const row = el("div", "chat-row " + who);
   const avatar = el("div", "avatar " + who);
-  avatar.innerHTML = who === "agent" ? (talkingPlantMode ? "🪴" : "❄️") : "✨";
-  avatar.title = who === "agent" ? (talkingPlantMode ? "Talking Plant" : "Winter Guardian") : "MY Master";
+  const isKarina = currentTheme === "karina";
+
+  if (who === "agent") {
+    avatar.innerHTML = talkingPlantMode ? "🪴" : (isKarina ? "🎄" : "❄️");
+    avatar.title = talkingPlantMode ? "Talking Plant" : (isKarina ? "Karina Guardian" : "Winter Guardian");
+  } else {
+    avatar.innerHTML = isKarina ? "🧑‍🌾" : "✨";
+    avatar.title = isKarina ? "Green Thumb" : "MY Master";
+  }
   
   const col = el("div", "msg-col");
   const meta = el("div", "sender-meta");
-  const agentTitle = talkingPlantMode ? "你的植栽小夥伴 🪴" : "Winter ❄️ (Plant Guardian)";
-  const name = el("span", "sender-name", who === "agent" ? agentTitle : "MY 🌿 (綠植守護者)");
+  let agentTitle = talkingPlantMode ? "你的植栽小夥伴 🪴" : (isKarina ? "Karina 🎄 (暖心聖誕守護者)" : "Winter ❄️ (Plant Guardian)");
+  let userTitle = isKarina ? "植栽主人 🧑‍🌾" : "MY 🌿 (綠植守護者)";
+
+  const name = el("span", "sender-name", who === "agent" ? agentTitle : userTitle);
   meta.appendChild(name);
   col.appendChild(meta);
   
@@ -1356,16 +1491,16 @@ function buildNode(id, comps, seen) {
       const src = boundStr(props.url || props.src);
       if (!/^https?:\/\//i.test(src)) return null;
       
-      // Wrap into aespa Winter Polaroid Postcard (Phase 3)
       const card = el("div", "polaroid-postcard");
       const img = el("img", "polaroid-img");
       img.src = src;
-      img.alt = boundStr(props.alt) || "Winter Botanical Art";
+      img.alt = boundStr(props.alt) || "Botanical Art";
       card.appendChild(img);
 
-      const cap = el("div", "polaroid-caption", boundStr(props.alt) || "KWANGYA BOTANICAL ARCHIVE");
+      const cap = el("div", "polaroid-caption", boundStr(props.alt) || "BOTANICAL ARCHIVE");
       card.appendChild(cap);
-      const sub = el("div", "polaroid-sub", "Limited Edition Postcard · Winter ❄️");
+      const subTitle = currentTheme === "karina" ? "Holiday Edition · Karina 🎄" : "Cyber-Frost Edition · Winter ❄️";
+      const sub = el("div", "polaroid-sub", subTitle);
       card.appendChild(sub);
 
       const dl = el("button", "polaroid-dl-btn", "📥 下載珍藏明信片");
@@ -1428,7 +1563,7 @@ function renderReply(b, timeEl, parts) {
 
   let preview = textStr;
   if (!preview && a2ui.length) {
-    preview = flattenText(a2ui) || "❄️ [A2UI 晶瑩資訊卡片]";
+    preview = flattenText(a2ui) || "🎄 [A2UI 晶瑩資訊卡片]";
   }
   return preview || "(無文字回覆)";
 }
@@ -1478,30 +1613,30 @@ function showWelcomeMessage() {
   
   const card = el("div", "welcome-card");
   const title = el("div", "welcome-title");
-  title.innerHTML = `<span>❄️</span> <span>Welcome to KWANGYA · Winter's Cyber Botanical Sanctuary</span> <span>🦋</span>`;
+  title.innerHTML = `<span>🎄</span> <span>Plant Companion · Karina 暖心聖誕綠植工坊</span> <span>✨</span>`;
   card.appendChild(title);
 
   const desc = el("div", "welcome-desc");
-  desc.innerHTML = `Hello, MY! 我是你的專屬植物守護者 <strong>Winter ❄️</strong>。全套 12 大智慧綠植功能已全面解鎖，守護你的整個冬日植栽！`;
+  desc.innerHTML = `哈囉！我是你的綠植好朋友 <strong>Karina 🎄</strong>。天冷了，泡杯熱紅酒，讓我陪你一起給心愛的植物最溫暖的聖誕照料！你可以點擊右上角隨時切換 <strong>Karina 聖誕暖調</strong> 或 <strong>Winter 冰霜賽博</strong> 風格喔！`;
   card.appendChild(desc);
 
   const list = el("ul", "welcome-feature-list");
   list.innerHTML = `
-    <li>🩺 <strong>病害診斷與換盆計算</strong>：點擊相機或輸入「龜背竹葉子發黃」、「換盆計算」</li>
-    <li>☀️ <strong>窗台採光方位評估</strong>：輸入「我家窗戶朝南，適合種什麼？」</li>
-    <li>💬 <strong>植物自述模式</strong>：點擊頂部「擬人化」按鈕，讓植物親自對你撒嬌說話</li>
-    <li>🖼️ <strong>拍立得藝術明信片</strong>：召喚插畫並一鍵下載 Winter 拍立得明信片</li>
-    <li>🎧 <strong>Lo-Fi 音樂 & 語音輸入</strong>：右上角 BGM 播放器與下方麥克風</li>
+    <li>🎨 <strong>雙風格一鍵切換</strong>：右上角【Karina 聖誕 / Winter 冰霜】隨心切換熱紅酒暖調與冰霜賽博風</li>
+    <li>🩺 <strong>病害急救與換盆計算</strong>：拍照或提問「龜背竹葉子發黃」、「換盆配土」</li>
+    <li>☀️ <strong>窗台採光方位評估</strong>：提問「朝東/朝南陽台適合種什麼植物？」</li>
+    <li>💬 <strong>Talking Plant 模式</strong>：點擊頂部「擬人化」，植物將會撒嬌與你對話</li>
+    <li>🎧 <strong>Lyria 暖心音樂 & 語音輸入</strong>：右上角 BGM 播放器與下方麥克風</li>
   `;
   card.appendChild(list);
 
   const chipsContainer = el("div", "suggestion-chips");
   const suggestions = [
-    { label: "🩺 診斷龜背竹葉片發黃", query: "My Monstera leaves are turning yellow and drooping, can you diagnose it?" },
-    { label: "🪴 虎尾蘭 15cm 換盆與介質配方", query: "幫我計算 15cm 虎尾蘭的換盆尺寸與介質配土" },
-    { label: "☀️ 朝東陽台適合養什麼植物？", query: "我家陽台朝東，請問光照如何？適合養什麼植物？" },
-    { label: "💊 登記琴葉榕施肥", query: "我剛剛給琴葉榕施了液態肥，幫我紀錄施肥日程" },
-    { label: "🎨 召喚龜背竹古典拍立得插畫", query: "Please generate a botanical illustration of a Monstera Deliciosa" }
+    { label: "🎄 龜背竹聖誕越冬暖心指南", query: "龜背竹在聖誕冬天的照護指南是什麼？" },
+    { label: "🪴 15cm 虎尾蘭換盆尺寸與介質配方", query: "幫我計算 15cm 虎尾蘭的換盆尺寸與介質配土" },
+    { label: "☀️ 朝南客廳窗台適合擺放什麼？", query: "我家客廳窗台朝南，光照充足，適合擺放什麼植物？" },
+    { label: "💧 登記琴葉榕補水打卡", query: "我剛剛給琴葉榕澆水了，幫我打卡" },
+    { label: "🎨 召喚聖誕版琴葉榕水彩明信片", query: "Please generate a botanical illustration of a Fiddle Leaf Fig" }
   ];
 
   suggestions.forEach(s => {
